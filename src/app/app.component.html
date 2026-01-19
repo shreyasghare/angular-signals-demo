@@ -1,0 +1,22 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <h1 class="nav-title">{{ title }}</h1>
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/user-form" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+          User Form
+        </a>
+      </li>
+      <li>
+        <a routerLink="/signals-demo" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+          Signals Demo
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+

@@ -1,0 +1,77 @@
+<div class="user-form-container">
+  <div class="user-form-header">
+    <h3>Child Component Demo</h3>
+    <p class="subtitle">Demonstrating input(), output(), and model() signals</p>
+  </div>
+
+  <div class="form-content">
+    <!-- Display Input Signal -->
+    <div class="input-display">
+      <label>Received Input Signal (userName):</label>
+      <div class="signal-display input-signal">
+        <strong>{{ userName() || 'No input received yet' }}</strong>
+        <span class="signal-badge">input()</span>
+      </div>
+      <p class="explanation">This value comes from parent's computed signal (fullName)</p>
+    </div>
+
+    <!-- Model Signal - Two-way binding -->
+    <div class="model-display">
+      <label>Model Signal (sharedModel) - Two-way binding:</label>
+      <div class="model-input-group">
+        <input 
+          type="text"
+          [value]="sharedModel()"
+          (input)="onModelInput($event)"
+          placeholder="Type to update model signal"
+          class="model-input"
+        />
+        <span class="signal-badge model-badge">model()</span>
+      </div>
+      <div class="signal-display model-signal">
+        Current value: <strong>{{ sharedModel() || 'Empty' }}</strong>
+      </div>
+      <p class="explanation">Changes here update parent's sharedValue signal automatically</p>
+    </div>
+
+    <!-- Output Signal -->
+    <div class="output-display">
+      <label>Output Event (userSubmitted):</label>
+      <button 
+        type="button" 
+        (click)="onSubmit()" 
+        class="submit-btn"
+        [disabled]="!canSubmit()"
+      >
+        Emit Output Signal
+      </button>
+      <p class="explanation">Click to emit output event with current values</p>
+      
+      <!-- Output Signal Statistics -->
+      @if (submissionCount() > 0) {
+        <div class="output-stats">
+          <div class="stat-item">
+            <span class="stat-label">Submissions:</span>
+            <span class="stat-value">{{ submissionCount() }}</span>
+          </div>
+          @if (lastSubmission()) {
+            <div class="stat-item">
+              <span class="stat-label">Last emitted:</span>
+              <span class="stat-value">{{ formatTimestamp(lastSubmission()!.timestamp) }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Summary -->
+    <div class="summary-box">
+      <h4>Signal Summary:</h4>
+      <ul>
+        <li><strong>Input:</strong> {{ userName() || 'Not set' }}</li>
+        <li><strong>Model:</strong> {{ sharedModel() || 'Not set' }}</li>
+        <li><strong>Output:</strong> {{ submissionCount() > 0 ? submissionCount() + ' time(s) emitted' : 'Ready to emit' }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
