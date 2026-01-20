@@ -1,0 +1,67 @@
+<div class="demo-container">
+  <header class="demo-header">
+    <a routerLink="/signals-demo" class="back-link">← Back to Signals Demo</a>
+    <h1>RxResource using REST API</h1>
+    <p class="intro">Demonstrating API integration with Angular Signals using rxResource - fetching and searching posts from JSONPlaceholder API</p>
+  </header>
+
+  <section class="post-search-section">
+    <div class="search-container">
+      <div class="search-input-group">
+        <input
+          type="text"
+          [value]="searchQuery()"
+          (input)="updateSearchQuery($event)"
+          placeholder="Search posts by title, body, ID, or user ID..."
+          class="search-input"
+        />
+        @if (searchQuery()) {
+          <button type="button" (click)="clearSearch()" class="clear-btn">Clear</button>
+        }
+      </div>
+
+      <div class="post-stats">
+        <span class="stat">Total Posts: <strong>{{ postCount() }}</strong></span>
+        @if (searchQuery()) {
+          <span class="stat">Filtered: <strong>{{ filteredPostCount() }}</strong></span>
+        } @else {
+          <span class="stat">Showing: <strong>{{ filteredPosts().length }}</strong> of {{ postCount() }}</span>
+        }
+        <span class="stat info-badge">Max 10 posts displayed</span>
+      </div>
+    </div>
+
+    @if (isLoading()) {
+      <div class="loading-state">
+        <p>Loading posts...</p>
+      </div>
+    } @else if (error()) {
+      <div class="error-state">
+        <p>{{ error() }}</p>
+        <button type="button" (click)="postsResource.reload()" class="retry-btn">Retry</button>
+      </div>
+    } @else if (filteredPosts().length === 0) {
+      <div class="no-results">
+        <p>No posts found matching your search.</p>
+      </div>
+    } @else {
+      <div class="posts-grid">
+        @for (post of filteredPosts(); track post.id) {
+          <div class="post-card">
+            <div class="post-header">
+              <span class="post-id">#{{ post.id }}</span>
+              <span class="post-user">User: {{ post.userId }}</span>
+            </div>
+            <h3 class="post-title">{{ post.title }}</h3>
+            <p class="post-body">{{ post.body }}</p>
+          </div>
+        }
+      </div>
+      @if (filteredPostCount() > 10) {
+        <div class="limit-notice">
+          <p>Showing first 10 of {{ filteredPostCount() }} matching posts. Refine your search to see more specific results.</p>
+        </div>
+      }
+    }
+  </section>
+</div>

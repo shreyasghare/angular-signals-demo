@@ -1,348 +1,65 @@
 <div class="signals-demo-container">
-  <h1>Angular Signals Demo</h1>
-  <p class="intro">This demo showcases all Angular Signal concepts with a practical form example.</p>
+  <!-- Header Section -->
+  <header class="header-section">
+    <h1>Angular Signals Demo</h1>
+    <p class="intro">This demo showcases all Angular Signal concepts with practical examples.</p>
+  </header>
 
-  <!-- Signal Concepts Explanation -->
+  <!-- Section 1: Signal Concepts -->
   <section class="concepts-section">
     <h2>Signal Concepts</h2>
+    <p class="section-intro">Click on any concept card below to learn more about each signal type and see detailed documentation.</p>
     <div class="concept-grid">
-      <div class="concept-card">
+      <a routerLink="/concepts/signal" class="concept-card">
         <h3>1. signal()</h3>
         <p>Basic reactive state. Values can be read with <code>signal()</code> and updated with <code>set()</code> or <code>update()</code>.</p>
-      </div>
-      <div class="concept-card">
+      </a>
+      <a routerLink="/concepts/computed" class="concept-card">
         <h3>2. computed()</h3>
         <p>Derived reactive values that automatically update when dependencies change. Read-only.</p>
-      </div>
-      <div class="concept-card">
+      </a>
+      <a routerLink="/concepts/effect" class="concept-card">
         <h3>3. effect()</h3>
         <p>Side effects that run when signals change. Automatically tracks dependencies.</p>
-      </div>
-      <div class="concept-card">
+      </a>
+      <a routerLink="/concepts/model" class="concept-card">
         <h3>4. model()</h3>
         <p>Two-way binding signal for parent-child component communication.</p>
-      </div>
-      <div class="concept-card">
+      </a>
+      <a routerLink="/concepts/input" class="concept-card">
         <h3>5. input()</h3>
         <p>Component input signal (demonstrated in child component).</p>
-      </div>
-      <div class="concept-card">
+      </a>
+      <a routerLink="/concepts/output" class="concept-card">
         <h3>6. output()</h3>
         <p>Component output event (demonstrated in child component).</p>
-      </div>
-      <div class="concept-card">
+      </a>
+      <a routerLink="/concepts/linked-signal" class="concept-card">
         <h3>7. linkedSignal()</h3>
         <p>Writable signal that is derived from other signals but can be written to independently. Maintains reactivity while allowing overrides.</p>
-      </div>
+      </a>
     </div>
   </section>
 
-  <!-- Form Section -->
-  <section class="form-section">
-    <h2>User Registration Form</h2>
-
-    <form class="user-form">
-      <!-- First Name - Using signal -->
-      <div class="form-group">
-        <label for="firstName">First Name (signal):</label>
-        <input
-          type="text"
-          id="firstName"
-          [value]="firstName()"
-          (input)="updateFirstName($event)"
-          placeholder="Enter first name"
-        />
-        <span class="signal-value">Signal value: {{ firstName() }}</span>
-      </div>
-
-      <!-- Last Name - Using signal -->
-      <div class="form-group">
-        <label for="lastName">Last Name (signal):</label>
-        <input
-          type="text"
-          id="lastName"
-          [value]="lastName()"
-          (input)="updateLastName($event)"
-          placeholder="Enter last name"
-        />
-        <span class="signal-value">Signal value: {{ lastName() }}</span>
-      </div>
-
-      <!-- Full Name - Computed Signal -->
-      <div class="form-group computed">
-        <label>Full Name (computed signal):</label>
-        <div class="computed-display">
-          <strong>{{ fullName() || 'Enter first and last name' }}</strong>
-        </div>
-        <p class="explanation">This is computed from firstName and lastName signals</p>
-      </div>
-
-      <!-- Age - Using signal -->
-      <div class="form-group">
-        <label for="age">Age (signal):</label>
-        <input
-          type="number"
-          id="age"
-          [value]="age()"
-          (input)="updateAge($event)"
-          placeholder="Enter age"
-          min="0"
-        />
-        <span class="signal-value">Signal value: {{ age() }}</span>
-      </div>
-
-      <!-- Age Category - Computed Signal -->
-      <div class="form-group computed">
-        <label>Age Category (computed signal):</label>
-        <div class="computed-display">
-          <strong>{{ ageCategory() || 'Enter age' }}</strong>
-        </div>
-        <p class="explanation">Automatically computed from age signal</p>
-      </div>
-
-      <!-- Email - Using signal -->
-      <div class="form-group">
-        <label for="email">Email (signal):</label>
-        <input
-          type="email"
-          id="email"
-          [value]="email()"
-          (input)="updateEmail($event)"
-          placeholder="Enter email"
-        />
-        <span class="signal-value">Signal value: {{ email() }}</span>
-      </div>
-
-      <!-- Form Validation - Computed Signal -->
-      <div class="form-group computed">
-        <label>Form Valid (computed signal):</label>
-        <div class="computed-display">
-          <strong [class.valid]="isFormValid()" [class.invalid]="!isFormValid()">
-            {{ isFormValid() ? '✓ Valid' : '✗ Invalid' }}
-          </strong>
-        </div>
-        <p class="explanation">Computed from all form field signals</p>
-      </div>
-
-      <!-- Form Summary - Computed Signal -->
-      <div class="form-group computed">
-        <label>Form Summary (computed signal):</label>
-        <div class="computed-display summary">
-          <pre>{{ formSummary() | json }}</pre>
-        </div>
-        <p class="explanation">All form data combined in a computed signal</p>
-      </div>
-
-      <!-- User Preferences - Signal with update() -->
-      <div class="form-group">
-        <label>User Preferences (signal with update()):</label>
-        <div class="preferences">
-          <button
-            type="button"
-            (click)="toggleNotifications()"
-            [class.active]="userPreferences().notifications"
-          >
-            Notifications: {{ userPreferences().notifications ? 'ON' : 'OFF' }}
-          </button>
-          <select
-            [value]="userPreferences().theme"
-            (change)="updateTheme($event)"
-          >
-            <option value="light">Light Theme</option>
-            <option value="dark">Dark Theme</option>
-            <option value="auto">Auto Theme</option>
-          </select>
-        </div>
-        <span class="signal-value">Preferences: {{ userPreferences() | json }}</span>
-      </div>
-
-      <!-- Model Signal - Two-way binding -->
-      <div class="form-group model">
-        <label>Shared Value (model signal - two-way binding):</label>
-        <div class="model-demo">
-          <input
-            type="text"
-            [value]="sharedValue()"
-            (input)="updateSharedValue($event)"
-            placeholder="Enter shared value"
-          />
-          <span class="signal-value">Model value: {{ sharedValue() }}</span>
-        </div>
-        <p class="explanation">This value is bound to child component via model()</p>
-      </div>
-
-      <!-- LinkedSignal Demo -->
-      <div class="form-group linked-signal">
-        <label>LinkedSignal Demo (linkedDisplayValue):</label>
-        <div class="linked-demo">
-          <div class="linked-source">
-            <label>Source (sharedValue):</label>
-            <span class="signal-value">{{ sharedValue() || 'Empty' }}</span>
-          </div>
-          <div class="linked-target">
-            <label>Linked Signal (can be edited independently):</label>
-            <input
-              type="text"
-              [value]="linkedDisplayValue()"
-              (input)="updateLinkedDisplayValue($event)"
-              placeholder="Edit linked signal"
-              class="linked-input"
-            />
-            <span class="signal-value">Linked value: {{ linkedDisplayValue() || 'Empty' }}</span>
-          </div>
-        </div>
-        <p class="explanation">LinkedSignal reacts to source changes but can be written to independently</p>
-      </div>
-
-      <!-- LinkedSignal for Editable Full Name -->
-      <div class="form-group linked-signal">
-        <label>Editable Full Name (LinkedSignal):</label>
-        <div class="linked-demo">
-          <div class="linked-source">
-            <label>Computed Full Name:</label>
-            <span class="signal-value">{{ fullName() || 'Empty' }}</span>
-          </div>
-          <div class="linked-target">
-            <label>Editable Version:</label>
-            <input
-              type="text"
-              [value]="editableFullName()"
-              (input)="updateEditableFullName($event)"
-              placeholder="Override computed name"
-              class="linked-input"
-            />
-            <span class="signal-value">Editable: {{ editableFullName() || 'Empty' }}</span>
-          </div>
-        </div>
-        <p class="explanation">LinkedSignal allows overriding computed values while maintaining reactivity</p>
-      </div>
-
-      <!-- LinkedSignal for Validated Age -->
-      <div class="form-group linked-signal">
-        <label>Validated Age (LinkedSignal with validation):</label>
-        <div class="linked-demo">
-          <div class="linked-source">
-            <label>Source Age:</label>
-            <span class="signal-value">{{ age() }}</span>
-          </div>
-          <div class="linked-target">
-            <label>Validated Age (keeps last valid value):</label>
-            <span class="signal-value validated">{{ validatedAge() }}</span>
-          </div>
-        </div>
-        <p class="explanation">LinkedSignal maintains previous valid value when source becomes invalid</p>
-      </div>
-
-      <!-- Child Component with input/output/model -->
-      <div class="form-group child-component">
-        <label>Child Component (input/output/model signals):</label>
-        <app-user-form
-          [userName]="fullName()"
-          [(sharedModel)]="sharedValue"
-          (userSubmitted)="onUserSubmitted($event)"
-        ></app-user-form>
-
-        <!-- Output Signal Display -->
-        @if (outputData()) {
-          <div class="output-signal-display">
-            <label>Received Output Signal:</label>
-            <div class="output-info">
-              <div class="output-item">
-                <span class="output-label">Timestamp:</span>
-                <span class="output-value">{{ formatOutputTimestamp(outputData()!.timestamp) }}</span>
-              </div>
-              <div class="output-item">
-                <span class="output-label">User Name:</span>
-                <span class="output-value">{{ outputData()!.userName }}</span>
-              </div>
-              <div class="output-item">
-                <span class="output-label">Shared Model:</span>
-                <span class="output-value">{{ outputData()!.sharedModel || 'Empty' }}</span>
-              </div>
-            </div>
-            <div class="computed-display summary">
-              <pre>{{ outputData() | json }}</pre>
-            </div>
-            <p class="explanation">This data was emitted from the child component via output() signal</p>
-          </div>
-        }
-      </div>
-
-      <!-- Action Buttons -->
-      <div class="form-actions">
-        <button type="button" (click)="resetForm()" class="btn-reset">Reset Form</button>
-      </div>
-    </form>
-  </section>
-
-  <!-- Effect Explanation -->
-  <section class="effects-section">
-    <h2>Effects in Action</h2>
-    <p>Open the browser console to see effects logging form changes.</p>
-    <p>The document title also updates automatically when the full name changes (check the browser tab title).</p>
-  </section>
-
-  <!-- Post Search Section -->
-  <section class="post-search-section">
-    <h2>Post Search with Signals</h2>
-    <p class="section-description">Demonstrating API integration with Angular Signals - fetching and searching posts from JSONPlaceholder API</p>
-
-    <div class="search-container">
-      <div class="search-input-group">
-        <input
-          type="text"
-          [value]="searchQuery()"
-          (input)="updateSearchQuery($event)"
-          placeholder="Search posts by title, body, ID, or user ID..."
-          class="search-input"
-        />
-        @if (searchQuery()) {
-          <button type="button" (click)="clearSearch()" class="clear-btn">Clear</button>
-        }
-      </div>
-
-      <div class="post-stats">
-        <span class="stat">Total Posts: <strong>{{ postCount() }}</strong></span>
-        @if (searchQuery()) {
-          <span class="stat">Filtered: <strong>{{ filteredPostCount() }}</strong></span>
-        } @else {
-          <span class="stat">Showing: <strong>{{ filteredPosts().length }}</strong> of {{ postCount() }}</span>
-        }
-        <span class="stat info-badge">Max 10 posts displayed</span>
-      </div>
+  <!-- Section 2: Live Demo for User Registration -->
+  <section class="demo-links-section">
+    <h2>Live Demo: User Registration Form</h2>
+    <p class="section-intro">Interact with a live form that demonstrates all signal concepts in action. Fill out the form and watch how signals react to your input.</p>
+    <div class="demo-link-container">
+      <a routerLink="/user-registration-demo" class="demo-link-button">
+        Try User Registration Demo →
+      </a>
     </div>
+  </section>
 
-    @if (isLoading()) {
-      <div class="loading-state">
-        <p>Loading posts...</p>
-      </div>
-    } @else if (error()) {
-      <div class="error-state">
-        <p>{{ error() }}</p>
-        <button type="button" (click)="postsResource.refetch()" class="retry-btn">Retry</button>
-      </div>
-    } @else if (filteredPosts().length === 0) {
-      <div class="no-results">
-        <p>No posts found matching your search.</p>
-      </div>
-    } @else {
-      <div class="posts-grid">
-        @for (post of filteredPosts(); track post.id) {
-          <div class="post-card">
-            <div class="post-header">
-              <span class="post-id">#{{ post.id }}</span>
-              <span class="post-user">User: {{ post.userId }}</span>
-            </div>
-            <h3 class="post-title">{{ post.title }}</h3>
-            <p class="post-body">{{ post.body }}</p>
-          </div>
-        }
-      </div>
-      @if (filteredPostCount() > 10) {
-        <div class="limit-notice">
-          <p>Showing first 10 of {{ filteredPostCount() }} matching posts. Refine your search to see more specific results.</p>
-        </div>
-      }
-    }
+  <!-- Section 3: RxResource using Rest API -->
+  <section class="demo-links-section">
+    <h2>RxResource using REST API</h2>
+    <p class="section-intro">Demonstrating API integration with Angular Signals using rxResource - fetching and searching posts from JSONPlaceholder API</p>
+    <div class="demo-link-container">
+      <a routerLink="/rxresource-demo" class="demo-link-button">
+        Try RxResource Demo →
+      </a>
+    </div>
   </section>
 </div>

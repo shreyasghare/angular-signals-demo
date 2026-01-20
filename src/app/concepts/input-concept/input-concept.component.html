@@ -1,0 +1,52 @@
+<div class="concept-container">
+  <header class="concept-header">
+    <a routerLink="/signals-demo" class="back-link">← Back to Demo</a>
+    <h1>input()</h1>
+    <p class="concept-description">Component input signal for receiving data from parent components</p>
+  </header>
+
+  <section class="concept-content">
+    <div class="concept-section">
+      <h2>Overview</h2>
+      <p>The <code>input()</code> function creates a read-only signal that receives values from a parent component. It replaces the traditional <code>&#64;Input()</code> decorator with a signal-based approach.</p>
+    </div>
+
+    <div class="concept-section">
+      <h2>Usage</h2>
+      <pre><code>import {{ '{' }} input {{ '}' }} from '&#64;angular/core';
+
+// In child component
+userName = input.required&lt;string&gt;();
+age = input(0); // Optional with default value
+
+// Use in template
+&lt;p&gt;Hello, {{ '{' }}{{ '{' }} userName() {{ '}' }}{{ '}' }}!&lt;/p&gt;
+
+// In parent component template
+&lt;app-child [userName]="fullName()" [age]="25"&gt;&lt;/app-child&gt;</code></pre>
+    </div>
+
+    <div class="concept-section">
+      <h2>Key Features</h2>
+      <ul>
+        <li>Read-only - cannot be updated from the child component</li>
+        <li>Reactive - automatically updates when parent changes the value</li>
+        <li>Type-safe - TypeScript types are enforced</li>
+        <li>Can be required or optional with default values</li>
+      </ul>
+    </div>
+
+    <div class="concept-section">
+      <h2>Example in Demo</h2>
+      <p>In the Signals Demo, the UserFormComponent uses an input signal to receive the userName from the parent SignalsDemoComponent.</p>
+      <a routerLink="/signals-demo" class="demo-link">View Live Demo →</a>
+    </div>
+
+    <div class="concept-section">
+      <h2>Documentation</h2>
+      <a href="https://angular.dev/guide/signals#input-signals" target="_blank" rel="noopener noreferrer" class="doc-link">
+        Read Official Angular Documentation →
+      </a>
+    </div>
+  </section>
+</div>

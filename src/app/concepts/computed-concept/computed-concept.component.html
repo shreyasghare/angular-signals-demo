@@ -1,0 +1,53 @@
+<div class="concept-container">
+  <header class="concept-header">
+    <a routerLink="/signals-demo" class="back-link">← Back to Demo</a>
+    <h1>computed()</h1>
+    <p class="concept-description">Derived reactive values that automatically update when dependencies change</p>
+  </header>
+
+  <section class="concept-content">
+    <div class="concept-section">
+      <h2>Overview</h2>
+      <p>The <code>computed()</code> function creates a read-only signal that derives its value from other signals. It automatically tracks dependencies and updates when they change.</p>
+    </div>
+
+    <div class="concept-section">
+      <h2>Usage</h2>
+      <pre><code>import {{ '{' }} signal, computed {{ '}' }} from '&#64;angular/core';
+
+firstName = signal('John');
+lastName = signal('Doe');
+
+// Create a computed signal
+fullName = computed(() => {{ '{' }}
+  return `${{ '{' }}this.firstName(){{ '}' }} ${{ '{' }}this.lastName(){{ '}' }}`;
+{{ '}' }});
+
+// Read the computed value
+const name = fullName();</code></pre>
+    </div>
+
+    <div class="concept-section">
+      <h2>Key Features</h2>
+      <ul>
+        <li>Read-only - cannot be directly updated with <code>set()</code></li>
+        <li>Automatic dependency tracking - tracks which signals it depends on</li>
+        <li>Lazy evaluation - only recomputes when dependencies change</li>
+        <li>Memoized - caches the result until dependencies change</li>
+      </ul>
+    </div>
+
+    <div class="concept-section">
+      <h2>Example in Demo</h2>
+      <p>In the Signals Demo, computed signals are used for fullName (derived from firstName and lastName), ageCategory (derived from age), and form validation (derived from all form fields).</p>
+      <a routerLink="/signals-demo" class="demo-link">View Live Demo →</a>
+    </div>
+
+    <div class="concept-section">
+      <h2>Documentation</h2>
+      <a href="https://angular.dev/guide/signals#computed-signals" target="_blank" rel="noopener noreferrer" class="doc-link">
+        Read Official Angular Documentation →
+      </a>
+    </div>
+  </section>
+</div>

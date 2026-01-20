@@ -1,25 +1,15 @@
 import { JsonPipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, computed, effect, linkedSignal, model, signal } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { UserFormComponent, UserSubmittedEvent } from '../user-form/user-form.component';
 
-// Interface for Post data from API
-export interface Post {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
-
 @Component({
-  selector: 'app-signals-demo',
+  selector: 'app-user-registration-demo',
   imports: [JsonPipe, UserFormComponent, RouterLink],
-  templateUrl: './signals-demo.component.html',
-  styleUrl: './signals-demo.component.css'
+  templateUrl: './user-registration-demo.component.html',
+  styleUrl: './user-registration-demo.component.css'
 })
-export class SignalsDemoComponent {
+export class UserRegistrationDemoComponent {
   // Basic signals
   firstName = signal<string>('');
   lastName = signal<string>('');
@@ -75,23 +65,17 @@ export class SignalsDemoComponent {
   sharedValue = model<string>('');
 
   // LinkedSignal: A writable signal that is derived from sharedValue but can be written to independently
-  // This demonstrates LinkedSignal - it reacts to sharedValue changes but can also be set directly
   linkedDisplayValue = linkedSignal<string, string>({
     source: this.sharedValue,
     computation: (sourceValue, previous) => {
-      // If source changed, use source value
-      // If linked signal was written to directly, keep the previous value if it's different from source
       return previous && previous.value !== sourceValue ? previous.value as string : sourceValue;
     }
   });
 
   // Another LinkedSignal example: Formatted full name that can be edited
-  // This creates a linked signal that formats the full name but can be overridden
   editableFullName = linkedSignal<string, string>({
     source: this.fullName,
     computation: (sourceValue, previous) => {
-      // If user hasn't edited it, use computed value
-      // If user edited it, keep the edited value
       return previous && previous.value !== sourceValue ? previous.value as string : sourceValue;
     }
   });
@@ -100,8 +84,6 @@ export class SignalsDemoComponent {
   validatedAge = linkedSignal<number, number>({
     source: this.age,
     computation: (sourceValue, previous) => {
-      // Keep previous value if source is invalid (0 or negative)
-      // Otherwise use source value
       if (sourceValue <= 0 && previous && (previous.value as number) > 0) {
         return previous.value as number;
       }
@@ -109,7 +91,7 @@ export class SignalsDemoComponent {
     }
   });
 
-  constructor(private http: HttpClient) {
+  constructor() {
     // Effect to log form changes
     effect(() => {
       const summary = this.formSummary();
@@ -120,13 +102,11 @@ export class SignalsDemoComponent {
     effect(() => {
       const name = this.fullName();
       if (name) {
-        document.title = `Signals Demo - ${name}`;
+        document.title = `User Registration - ${name}`;
       } else {
-        document.title = 'Angular Signals Demo';
+        document.title = 'User Registration Demo';
       }
     });
-
-    // Posts are automatically loaded via rxResource
   }
 
   // Update methods with proper event handling
@@ -210,91 +190,16 @@ export class SignalsDemoComponent {
     this.sharedValue.set('');
   }
 
-  // Output signal handler with proper typing
+  // Output signal handler
   outputData = signal<UserSubmittedEvent | null>(null);
 
   onUserSubmitted(event: UserSubmittedEvent): void {
     console.log('User submitted from child component:', event);
-    // Store the output signal value
     this.outputData.set(event);
   }
 
   // Format timestamp for display
   formatOutputTimestamp(timestamp: number): string {
     return new Date(timestamp).toLocaleString();
-  }
-
-  // Post Search API functionality with rxResource
-  searchQuery = signal<string>('');
-
-  // rxResource for fetching posts from API
-  postsResource = rxResource({
-    request: () => ({}),
-    loader: () => {
-      return this.http.get<Post[]>('https://jsonplaceholder.typicode.com/posts');
-    }
-  });
-
-  // Computed signal to get posts from resource
-  allPosts = computed(() => {
-    const value = this.postsResource.value();
-    return value ?? [];
-  });
-
-  // Computed signal for filtered posts based on search query
-  filteredPosts = computed(() => {
-    const query = this.searchQuery().toLowerCase().trim();
-    const allPosts = this.allPosts();
-
-    if (!query) {
-      // Return first 10 posts when no search query
-      return allPosts.slice(0, 10);
-    }
-
-    const filtered = allPosts.filter(post =>
-      post.title.toLowerCase().includes(query) ||
-      post.body.toLowerCase().includes(query) ||
-      post.id.toString().includes(query) ||
-      post.userId.toString().includes(query)
-    );
-
-    // Limit to 10 posts maximum
-    return filtered.slice(0, 10);
-  });
-
-  // Computed signal for post count
-  postCount = computed(() => this.allPosts().length);
-  filteredPostCount = computed(() => {
-    const query = this.searchQuery().toLowerCase().trim();
-    if (!query) {
-      return Math.min(10, this.postCount());
-    }
-    const allPosts = this.allPosts();
-    return allPosts.filter(post =>
-      post.title.toLowerCase().includes(query) ||
-      post.body.toLowerCase().includes(query) ||
-      post.id.toString().includes(query) ||
-      post.userId.toString().includes(query)
-    ).length;
-  });
-
-  // Computed signals for loading and error states from rxResource
-  isLoading = computed(() => this.postsResource.isLoading());
-  error = computed(() => {
-    const error = this.postsResource.error();
-    return error ? 'Failed to load posts. Please try again later.' : null;
-  });
-
-  // Method to update search query
-  updateSearchQuery(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    if (target) {
-      this.searchQuery.set(target.value);
-    }
-  }
-
-  // Method to clear search
-  clearSearch(): void {
-    this.searchQuery.set('');
   }
 }

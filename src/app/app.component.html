@@ -3,13 +3,13 @@
     <h1 class="nav-title">{{ title }}</h1>
     <ul class="nav-links">
       <li>
-        <a routerLink="/user-form" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
-          User Form
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          Home
         </a>
       </li>
       <li>
         <a routerLink="/signals-demo" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
-          Signals Demo
+          Signal Demo
         </a>
       </li>
     </ul>
@@ -20,3 +20,4 @@
   <router-outlet></router-outlet>
 </main>
 
+<app-scroll-to-top></app-scroll-to-top>
