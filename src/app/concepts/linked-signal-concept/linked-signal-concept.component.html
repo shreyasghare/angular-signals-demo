@@ -1,6 +1,6 @@
 <div class="concept-container">
   <header class="concept-header">
-    <a routerLink="/signals-demo" class="back-link">← Back to Demo</a>
+    <a routerLink="/" class="back-link">← Back to Home</a>
     <h1>linkedSignal()</h1>
     <p class="concept-description">Writable signal derived from other signals but can be written to independently</p>
   </header>
@@ -23,8 +23,8 @@ linkedValue = linkedSignal&lt;string, string&gt;({{ '{' }}
   computation: (sourceValue, previous) => {{ '{' }}
     // If source changed, use source value
     // If linked signal was written to directly, keep previous value
-    return previous &amp;&amp; previous.value !== sourceValue 
-      ? previous.value as string 
+    return previous &amp;&amp; previous.value !== sourceValue
+      ? previous.value as string
       : sourceValue;
   {{ '}' }}
 {{ '}' }});

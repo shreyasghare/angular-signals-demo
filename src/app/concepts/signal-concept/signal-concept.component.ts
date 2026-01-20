@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+// Component demonstrating Angular signal concept
 @Component({
   selector: 'app-signal-concept',
   imports: [RouterLink],
@@ -8,5 +9,4 @@ import { RouterLink } from '@angular/router';
   styleUrl: './signal-concept.component.css'
 })
 export class SignalConceptComponent {
-
 }

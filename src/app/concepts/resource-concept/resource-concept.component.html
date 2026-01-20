@@ -1,0 +1,64 @@
+<div class="concept-container">
+  <header class="concept-header">
+    <a routerLink="/" class="back-link">← Back to Home</a>
+    <h1>resource() / rxResource()</h1>
+    <p class="concept-description">Async reactivity with resources for handling asynchronous data operations</p>
+  </header>
+
+  <section class="concept-content">
+    <div class="concept-section">
+      <h2>Overview</h2>
+      <p>The <code>resource()</code> function creates a resource that incorporates async data into your application's signal-based code. <code>rxResource()</code> is a wrapper around HttpClient that provides request status and response as signals, making HTTP requests through the Angular HTTP stack.</p>
+    </div>
+
+    <div class="concept-section">
+      <h2>Usage</h2>
+      <pre><code>import {{ '{' }} resource {{ '}' }} from '&#64;angular/core';
+import {{ '{' }} rxResource {{ '}' }} from '&#64;angular/core/rxjs-interop';
+import {{ '{' }} HttpClient {{ '}' }} from '&#64;angular/common/http';
+
+// Using resource() with fetch
+const userId = signal('123');
+const userResource = resource({{ '{' }}
+  params: () => ({{ '{' }} id: userId() {{ '}' }}),
+  loader: ({{ '{' }} params {{ '}' }}) => fetchUser(params)
+{{ '}' }});
+
+// Using rxResource() with HttpClient
+const postsResource = rxResource({{ '{' }}
+  request: () => ({{ '{' }} {{ '}' }}),
+  loader: () => this.http.get&lt;Post[]&gt;('https://api.example.com/posts')
+{{ '}' }});
+
+// Access resource value
+const posts = computed(() => postsResource.value() ?? []);
+const isLoading = computed(() => postsResource.isLoading());
+const error = computed(() => postsResource.error());</code></pre>
+    </div>
+
+    <div class="concept-section">
+      <h2>Key Features</h2>
+      <ul>
+        <li>Async data handling - incorporate async operations into signal-based code</li>
+        <li>Reactive - automatically reloads when params change</li>
+        <li>Status signals - provides isLoading, error, and value signals</li>
+        <li>HTTP integration - rxResource works seamlessly with Angular HttpClient</li>
+        <li>Request cancellation - automatically aborts requests when params change</li>
+        <li>Type-safe - TypeScript types are enforced for request and response data</li>
+      </ul>
+    </div>
+
+    <div class="concept-section">
+      <h2>Example in Demo</h2>
+      <p>In the RxResource Demo, rxResource is used to fetch posts from an API. The component demonstrates reactive data fetching with search and limit functionality. The resource automatically reloads when search query or post limit changes.</p>
+      <a routerLink="/rxresource-demo" class="demo-link">View Live Demo →</a>
+    </div>
+
+    <div class="concept-section">
+      <h2>Documentation</h2>
+      <a href="https://angular.dev/guide/signals/resource" target="_blank" rel="noopener noreferrer" class="doc-link">
+        Read Official Angular Documentation →
+      </a>
+    </div>
+  </section>
+</div>

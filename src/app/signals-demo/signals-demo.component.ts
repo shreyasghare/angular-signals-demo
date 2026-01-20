@@ -14,7 +14,7 @@ export interface Post {
 
 @Component({
   selector: 'app-signals-demo',
-  imports: [ RouterLink],
+  imports: [RouterLink],
   templateUrl: './signals-demo.component.html',
   styleUrl: './signals-demo.component.css'
 })
@@ -26,13 +26,13 @@ export class SignalsDemoComponent {
   email = signal<string>('');
 
   // Computed signals
-  fullName = computed(() => {
+  fullName = computed((): string => {
     const first = this.firstName().trim();
     const last = this.lastName().trim();
     return first && last ? `${first} ${last}` : '';
   });
 
-  ageCategory = computed(() => {
+  ageCategory = computed((): string => {
     const ageValue = this.age();
     if (ageValue === 0) return '';
     if (ageValue < 13) return 'Child';
@@ -41,7 +41,7 @@ export class SignalsDemoComponent {
     return 'Senior';
   });
 
-  isFormValid = computed(() => {
+  isFormValid = computed((): boolean => {
     return !!(
       this.firstName().trim() &&
       this.lastName().trim() &&
@@ -51,7 +51,16 @@ export class SignalsDemoComponent {
     );
   });
 
-  formSummary = computed(() => {
+  formSummary = computed((): {
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    age: number;
+    ageCategory: string;
+    email: string;
+    preferences: { notifications: boolean; theme: string };
+    sharedValue: string;
+  } => {
     return {
       firstName: this.firstName(),
       lastName: this.lastName(),
@@ -73,62 +82,45 @@ export class SignalsDemoComponent {
   // Model signal for two-way binding
   sharedValue = model<string>('');
 
-  // LinkedSignal: A writable signal that is derived from sharedValue but can be written to independently
-  // This demonstrates LinkedSignal - it reacts to sharedValue changes but can also be set directly
+  // LinkedSignal: writable signal derived from sharedValue but can be written to independently
   linkedDisplayValue = linkedSignal<string, string>({
     source: this.sharedValue,
-    computation: (sourceValue, previous) => {
-      // If source changed, use source value
-      // If linked signal was written to directly, keep the previous value if it's different from source
-      return previous && previous.value !== sourceValue ? previous.value as string : sourceValue;
+    computation: (sourceValue: string, previous: { value: string } | undefined): string => {
+      // Keep previous value if linked signal was written directly, otherwise use source value
+      return previous && previous.value !== sourceValue ? previous.value : sourceValue;
     }
   });
 
-  // Another LinkedSignal example: Formatted full name that can be edited
-  // This creates a linked signal that formats the full name but can be overridden
+  // LinkedSignal example: formatted full name that can be edited independently
   editableFullName = linkedSignal<string, string>({
     source: this.fullName,
-    computation: (sourceValue, previous) => {
-      // If user hasn't edited it, use computed value
-      // If user edited it, keep the edited value
-      return previous && previous.value !== sourceValue ? previous.value as string : sourceValue;
+    computation: (sourceValue: string, previous: { value: string } | undefined): string => {
+      // Keep edited value if user modified it, otherwise use computed value
+      return previous && previous.value !== sourceValue ? previous.value : sourceValue;
     }
   });
 
   // LinkedSignal for age with validation - keeps valid age, resets if invalid
   validatedAge = linkedSignal<number, number>({
     source: this.age,
-    computation: (sourceValue, previous) => {
-      // Keep previous value if source is invalid (0 or negative)
-      // Otherwise use source value
-      if (sourceValue <= 0 && previous && (previous.value as number) > 0) {
-        return previous.value as number;
+    computation: (sourceValue: number, previous: { value: number } | undefined): number => {
+      // Keep previous valid value if source is invalid (0 or negative)
+      if (sourceValue <= 0 && previous && previous.value > 0) {
+        return previous.value;
       }
       return sourceValue;
     }
   });
 
   constructor(private http: HttpClient) {
-    // Effect to log form changes
-    effect(() => {
-      const summary = this.formSummary();
-      console.log('Form changed:', summary);
-    });
-
-    // Effect to update document title
+    // Effect to update document title based on full name
     effect(() => {
       const name = this.fullName();
-      if (name) {
-        document.title = `Signals Demo - ${name}`;
-      } else {
-        document.title = 'Angular Signals Demo';
-      }
+      document.title = name ? `Signals Demo - ${name}` : 'Angular Signals Demo';
     });
-
-    // Posts are automatically loaded via rxResource
   }
 
-  // Update methods with proper event handling
+  // Update methods with proper event handling and type safety
   updateFirstName(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target) {
@@ -213,12 +205,11 @@ export class SignalsDemoComponent {
   outputData = signal<UserSubmittedEvent | null>(null);
 
   onUserSubmitted(event: UserSubmittedEvent): void {
-    console.log('User submitted from child component:', event);
-    // Store the output signal value
+    // Store the output signal value from child component
     this.outputData.set(event);
   }
 
-  // Format timestamp for display
+  // Format timestamp for display in user-friendly format
   formatOutputTimestamp(timestamp: number): string {
     return new Date(timestamp).toLocaleString();
   }
@@ -235,41 +226,42 @@ export class SignalsDemoComponent {
   });
 
   // Computed signal to get posts from resource
-  allPosts = computed(() => {
+  allPosts = computed((): Post[] => {
     const value = this.postsResource.value();
     return value ?? [];
   });
 
   // Computed signal for filtered posts based on search query
-  filteredPosts = computed(() => {
+  filteredPosts = computed((): Post[] => {
     const query = this.searchQuery().toLowerCase().trim();
     const allPosts = this.allPosts();
 
     if (!query) {
-      // Return first 10 posts when no search query
       return allPosts.slice(0, 10);
     }
 
-    const filtered = allPosts.filter(post =>
+    // Filter posts by title, body, id, or userId matching the query
+    const filtered = allPosts.filter((post: Post) =>
       post.title.toLowerCase().includes(query) ||
       post.body.toLowerCase().includes(query) ||
       post.id.toString().includes(query) ||
       post.userId.toString().includes(query)
     );
 
-    // Limit to 10 posts maximum
     return filtered.slice(0, 10);
   });
 
-  // Computed signal for post count
-  postCount = computed(() => this.allPosts().length);
-  filteredPostCount = computed(() => {
+  // Computed signal for total post count
+  postCount = computed((): number => this.allPosts().length);
+  
+  // Computed signal for filtered post count
+  filteredPostCount = computed((): number => {
     const query = this.searchQuery().toLowerCase().trim();
     if (!query) {
       return Math.min(10, this.postCount());
     }
     const allPosts = this.allPosts();
-    return allPosts.filter(post =>
+    return allPosts.filter((post: Post) =>
       post.title.toLowerCase().includes(query) ||
       post.body.toLowerCase().includes(query) ||
       post.id.toString().includes(query) ||
@@ -278,13 +270,13 @@ export class SignalsDemoComponent {
   });
 
   // Computed signals for loading and error states from rxResource
-  isLoading = computed(() => this.postsResource.isLoading());
-  error = computed(() => {
-    const error = this.postsResource.error();
-    return error ? 'Failed to load posts. Please try again later.' : null;
+  isLoading = computed((): boolean => this.postsResource.isLoading());
+  error = computed((): string | null => {
+    const resourceError = this.postsResource.error();
+    return resourceError ? 'Failed to load posts. Please try again later.' : null;
   });
 
-  // Method to update search query
+  // Update search query from input event
   updateSearchQuery(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target) {
@@ -292,7 +284,7 @@ export class SignalsDemoComponent {
     }
   }
 
-  // Method to clear search
+  // Clear search query and reset filter
   clearSearch(): void {
     this.searchQuery.set('');
   }

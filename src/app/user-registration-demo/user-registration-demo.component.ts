@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, computed, effect, linkedSignal, model, signal } from '@angular/core';
+import { Component, computed, model, signal, WritableSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UserFormComponent, UserSubmittedEvent } from '../user-form/user-form.component';
 
@@ -17,13 +17,13 @@ export class UserRegistrationDemoComponent {
   email = signal<string>('');
 
   // Computed signals
-  fullName = computed(() => {
+  fullName = computed((): string => {
     const first = this.firstName().trim();
     const last = this.lastName().trim();
     return first && last ? `${first} ${last}` : '';
   });
 
-  ageCategory = computed(() => {
+  ageCategory = computed((): string => {
     const ageValue = this.age();
     if (ageValue === 0) return '';
     if (ageValue < 13) return 'Child';
@@ -32,7 +32,7 @@ export class UserRegistrationDemoComponent {
     return 'Senior';
   });
 
-  isFormValid = computed(() => {
+  isFormValid = computed((): boolean => {
     return !!(
       this.firstName().trim() &&
       this.lastName().trim() &&
@@ -42,7 +42,15 @@ export class UserRegistrationDemoComponent {
     );
   });
 
-  formSummary = computed(() => {
+  formSummary = computed((): {
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    age: number;
+    ageCategory: string;
+    email: string;
+    sharedValue: string;
+  } => {
     return {
       firstName: this.firstName(),
       lastName: this.lastName(),
@@ -50,80 +58,62 @@ export class UserRegistrationDemoComponent {
       age: this.age(),
       ageCategory: this.ageCategory(),
       email: this.email(),
-      preferences: this.userPreferences(),
       sharedValue: this.sharedValue()
     };
-  });
-
-  // Signal with object (using update())
-  userPreferences = signal<{ notifications: boolean; theme: string }>({
-    notifications: false,
-    theme: 'light'
   });
 
   // Model signal for two-way binding
   sharedValue = model<string>('');
 
-  // LinkedSignal: A writable signal that is derived from sharedValue but can be written to independently
-  linkedDisplayValue = linkedSignal<string, string>({
-    source: this.sharedValue,
-    computation: (sourceValue, previous) => {
-      return previous && previous.value !== sourceValue ? previous.value as string : sourceValue;
+  // Source selection for computed transformation
+  computedSource = signal<'firstName' | 'lastName' | 'email' | 'sharedValue'>('firstName');
+
+  // Get the selected source value based on computedSource signal
+  selectedSourceValue = computed((): string => {
+    const source = this.computedSource();
+    switch (source) {
+      case 'firstName': return this.firstName();
+      case 'lastName': return this.lastName();
+      case 'email': return this.email();
+      case 'sharedValue': return this.sharedValue();
+      default: return '';
     }
   });
 
-  // Another LinkedSignal example: Formatted full name that can be edited
-  editableFullName = linkedSignal<string, string>({
-    source: this.fullName,
-    computation: (sourceValue, previous) => {
-      return previous && previous.value !== sourceValue ? previous.value as string : sourceValue;
+  // Generic computation that transforms the source value based on selected source
+  computedTransformation = computed((): string => {
+    const source = this.computedSource();
+    const value = this.selectedSourceValue();
+
+    if (!value) return 'No value to transform';
+
+    switch (source) {
+      case 'firstName':
+        return `Hello, ${value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()}!`;
+      case 'lastName':
+        return `Family name: ${value.toUpperCase()}`;
+      case 'email':
+        const domain = value.includes('@') ? value.split('@')[1] : 'invalid';
+        return `Email domain: ${domain}`;
+      case 'sharedValue':
+        return `[${value.length} chars] "${value}"`;
+      default:
+        return value;
     }
   });
 
-  // LinkedSignal for age with validation - keeps valid age, resets if invalid
-  validatedAge = linkedSignal<number, number>({
-    source: this.age,
-    computation: (sourceValue, previous) => {
-      if (sourceValue <= 0 && previous && (previous.value as number) > 0) {
-        return previous.value as number;
-      }
-      return sourceValue;
-    }
-  });
+  // Output signal handler for user form submission events
+  outputData = signal<UserSubmittedEvent | null>(null);
 
-  constructor() {
-    // Effect to log form changes
-    effect(() => {
-      const summary = this.formSummary();
-      console.log('Form changed:', summary);
-    });
-
-    // Effect to update document title
-    effect(() => {
-      const name = this.fullName();
-      if (name) {
-        document.title = `User Registration - ${name}`;
-      } else {
-        document.title = 'User Registration Demo';
-      }
-    });
-  }
-
-  // Update methods with proper event handling
-  updateFirstName(event: Event): void {
+  // Generic update method for string signals
+  updateSignal(signalRef: WritableSignal<string>, event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target) {
-      this.firstName.set(target.value);
+      signalRef.set(target.value);
     }
   }
 
-  updateLastName(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    if (target) {
-      this.lastName.set(target.value);
-    }
-  }
-
+  // Update method for age (number) with validation
   updateAge(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target) {
@@ -132,73 +122,29 @@ export class UserRegistrationDemoComponent {
     }
   }
 
-  updateEmail(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    if (target) {
-      this.email.set(target.value);
-    }
-  }
-
-  updateSharedValue(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    if (target) {
-      this.sharedValue.set(target.value);
-    }
-  }
-
-  // Update methods for LinkedSignal
-  updateLinkedDisplayValue(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    if (target) {
-      this.linkedDisplayValue.set(target.value);
-    }
-  }
-
-  updateEditableFullName(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    if (target) {
-      this.editableFullName.set(target.value);
-    }
-  }
-
-  toggleNotifications(): void {
-    this.userPreferences.update(prefs => ({
-      ...prefs,
-      notifications: !prefs.notifications
-    }));
-  }
-
-  updateTheme(event: Event): void {
+  // Change computed source for transformation demonstration
+  changeComputedSource(event: Event): void {
     const target = event.target as HTMLSelectElement;
     if (target) {
-      this.userPreferences.update(prefs => ({
-        ...prefs,
-        theme: target.value
-      }));
+      this.computedSource.set(target.value as 'firstName' | 'lastName' | 'email' | 'sharedValue');
     }
   }
 
+  // Reset all form fields to initial state
   resetForm(): void {
     this.firstName.set('');
     this.lastName.set('');
     this.age.set(0);
     this.email.set('');
-    this.userPreferences.set({
-      notifications: false,
-      theme: 'light'
-    });
     this.sharedValue.set('');
   }
 
-  // Output signal handler
-  outputData = signal<UserSubmittedEvent | null>(null);
-
+  // Handle user form submission event from child component
   onUserSubmitted(event: UserSubmittedEvent): void {
-    console.log('User submitted from child component:', event);
     this.outputData.set(event);
   }
 
-  // Format timestamp for display
+  // Format timestamp for display in user-friendly format
   formatOutputTimestamp(timestamp: number): string {
     return new Date(timestamp).toLocaleString();
   }

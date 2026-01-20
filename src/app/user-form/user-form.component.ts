@@ -27,7 +27,7 @@ export class UserFormComponent {
   submissionCount = signal<number>(0);
   lastSubmission = signal<UserSubmittedEvent | null>(null);
 
-  // Method to handle input event and update model signal
+  // Handle input event and update model signal for two-way binding
   onModelInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target) {
@@ -35,7 +35,7 @@ export class UserFormComponent {
     }
   }
 
-  // Method to emit output signal with proper data structure
+  // Emit output signal with proper data structure when form is submitted
   onSubmit(): void {
     if (!this.canSubmit()) {
       return;
@@ -47,20 +47,18 @@ export class UserFormComponent {
       timestamp: Date.now()
     };
 
-    // Update internal state
-    this.submissionCount.update(count => count + 1);
+    // Update internal state and emit output signal
+    this.submissionCount.update((count: number) => count + 1);
     this.lastSubmission.set(eventData);
-
-    // Emit output signal
     this.userSubmitted.emit(eventData);
   }
 
-  // Check if form can be submitted
+  // Check if form can be submitted based on userName input
   canSubmit(): boolean {
     return !!this.userName();
   }
 
-  // Format timestamp for display
+  // Format timestamp for display in user-friendly format
   formatTimestamp(timestamp: number): string {
     return new Date(timestamp).toLocaleString();
   }

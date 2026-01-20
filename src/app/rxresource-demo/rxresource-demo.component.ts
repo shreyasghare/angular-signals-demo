@@ -1,9 +1,8 @@
-import { Component, computed, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Component, computed, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 
-// Interface for Post data from API
 export interface Post {
   userId: number;
   id: number;
@@ -18,55 +17,78 @@ export interface Post {
   styleUrl: './rxresource-demo.component.css'
 })
 export class RxresourceDemoComponent {
-  // Post Search API functionality with rxResource
   searchQuery = signal<string>('');
+  postLimit = signal<number>(10);
 
   constructor(private http: HttpClient) {}
 
-  // rxResource for fetching posts from API
+  // Reactive resource that fetches posts when searchQuery or postLimit changes
   postsResource = rxResource({
-    request: () => ({}),
-    loader: () => {
-      return this.http.get<Post[]>('https://jsonplaceholder.typicode.com/posts');
+    request: () => ({
+      searchQuery: this.searchQuery(),
+      limit: this.postLimit()
+    }),
+    loader: ({ request }: { request: { searchQuery: string; limit: number } }) => {
+      const { searchQuery, limit } = request;
+      let url = 'https://jsonplaceholder.typicode.com/posts';
+      const params: string[] = [];
+
+      // Add limit parameter (_limit is supported by JSONPlaceholder)
+      if (limit) {
+        params.push(`_limit=${limit}`);
+      }
+
+      // Add search parameter (title_like for partial match in title)
+      if (searchQuery && searchQuery.trim()) {
+        params.push(`title_like=${encodeURIComponent(searchQuery.trim())}`);
+      }
+
+      if (params.length > 0) {
+        url += `?${params.join('&')}`;
+      }
+
+      return this.http.get<Post[]>(url);
     }
   });
 
-  // Computed signal to get posts from resource
-  allPosts = computed(() => {
-    const value = this.postsResource.value();
-    return value ?? [];
-  });
+  // Computed signal to get all posts from resource
+  allPosts = computed((): Post[] => this.postsResource.value() ?? []);
 
-  // Computed signal for filtered posts based on search query
-  filteredPosts = computed(() => {
+  // Filter and limit posts based on search query and limit
+  filteredPosts = computed((): Post[] => {
     const query = this.searchQuery().toLowerCase().trim();
+    const limit = this.postLimit();
     const allPosts = this.allPosts();
 
     if (!query) {
-      // Return first 10 posts when no search query
-      return allPosts.slice(0, 10);
+      return allPosts.slice(0, limit);
     }
 
-    const filtered = allPosts.filter(post =>
+    // Filter posts by title, body, id, or userId matching the query
+    const filtered = allPosts.filter((post: Post) =>
       post.title.toLowerCase().includes(query) ||
       post.body.toLowerCase().includes(query) ||
       post.id.toString().includes(query) ||
       post.userId.toString().includes(query)
     );
 
-    // Limit to 10 posts maximum
-    return filtered.slice(0, 10);
+    return filtered.slice(0, limit);
   });
 
-  // Computed signal for post count
-  postCount = computed(() => this.allPosts().length);
-  filteredPostCount = computed(() => {
+  // Computed signal for total post count
+  postCount = computed((): number => this.allPosts().length);
+
+  // Computed signal for filtered post count
+  filteredPostCount = computed((): number => {
     const query = this.searchQuery().toLowerCase().trim();
+    const limit = this.postLimit();
+
     if (!query) {
-      return Math.min(10, this.postCount());
+      return Math.min(limit, this.postCount());
     }
+
     const allPosts = this.allPosts();
-    return allPosts.filter(post =>
+    return allPosts.filter((post: Post) =>
       post.title.toLowerCase().includes(query) ||
       post.body.toLowerCase().includes(query) ||
       post.id.toString().includes(query) ||
@@ -74,14 +96,16 @@ export class RxresourceDemoComponent {
     ).length;
   });
 
-  // Computed signals for loading and error states from rxResource
-  isLoading = computed(() => this.postsResource.isLoading());
-  error = computed(() => {
-    const error = this.postsResource.error();
-    return error ? 'Failed to load posts. Please try again later.' : null;
+  // Computed signal for loading state
+  isLoading = computed((): boolean => this.postsResource.isLoading());
+
+  // Computed signal for error state
+  error = computed((): string | null => {
+    const resourceError = this.postsResource.error();
+    return resourceError ? 'Failed to load posts. Please try again later.' : null;
   });
 
-  // Method to update search query
+  // Update search query from input event
   updateSearchQuery(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target) {
@@ -89,8 +113,17 @@ export class RxresourceDemoComponent {
     }
   }
 
-  // Method to clear search
+  // Clear search query and reset filter
   clearSearch(): void {
     this.searchQuery.set('');
+  }
+
+  // Update post limit from select event
+  updatePostLimit(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    if (target) {
+      const value = parseInt(target.value, 10);
+      this.postLimit.set(isNaN(value) ? 10 : value);
+    }
   }
 }

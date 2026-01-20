@@ -5,43 +5,7 @@
     <p class="intro">This demo showcases all Angular Signal concepts with practical examples.</p>
   </header>
 
-  <!-- Section 1: Signal Concepts -->
-  <section class="concepts-section">
-    <h2>Signal Concepts</h2>
-    <p class="section-intro">Click on any concept card below to learn more about each signal type and see detailed documentation.</p>
-    <div class="concept-grid">
-      <a routerLink="/concepts/signal" class="concept-card">
-        <h3>1. signal()</h3>
-        <p>Basic reactive state. Values can be read with <code>signal()</code> and updated with <code>set()</code> or <code>update()</code>.</p>
-      </a>
-      <a routerLink="/concepts/computed" class="concept-card">
-        <h3>2. computed()</h3>
-        <p>Derived reactive values that automatically update when dependencies change. Read-only.</p>
-      </a>
-      <a routerLink="/concepts/effect" class="concept-card">
-        <h3>3. effect()</h3>
-        <p>Side effects that run when signals change. Automatically tracks dependencies.</p>
-      </a>
-      <a routerLink="/concepts/model" class="concept-card">
-        <h3>4. model()</h3>
-        <p>Two-way binding signal for parent-child component communication.</p>
-      </a>
-      <a routerLink="/concepts/input" class="concept-card">
-        <h3>5. input()</h3>
-        <p>Component input signal (demonstrated in child component).</p>
-      </a>
-      <a routerLink="/concepts/output" class="concept-card">
-        <h3>6. output()</h3>
-        <p>Component output event (demonstrated in child component).</p>
-      </a>
-      <a routerLink="/concepts/linked-signal" class="concept-card">
-        <h3>7. linkedSignal()</h3>
-        <p>Writable signal that is derived from other signals but can be written to independently. Maintains reactivity while allowing overrides.</p>
-      </a>
-    </div>
-  </section>
-
-  <!-- Section 2: Live Demo for User Registration -->
+  <!-- Section 1: Live Demo for User Registration -->
   <section class="demo-links-section">
     <h2>Live Demo: User Registration Form</h2>
     <p class="section-intro">Interact with a live form that demonstrates all signal concepts in action. Fill out the form and watch how signals react to your input.</p>

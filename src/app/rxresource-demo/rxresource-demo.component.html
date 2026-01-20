@@ -20,6 +20,22 @@
         }
       </div>
 
+      <div class="limit-control-group">
+        <label for="postLimit" class="limit-label">Posts per page:</label>
+        <select
+          id="postLimit"
+          [value]="postLimit()"
+          (change)="updatePostLimit($event)"
+          class="limit-select"
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+
       <div class="post-stats">
         <span class="stat">Total Posts: <strong>{{ postCount() }}</strong></span>
         @if (searchQuery()) {
@@ -27,7 +43,7 @@
         } @else {
           <span class="stat">Showing: <strong>{{ filteredPosts().length }}</strong> of {{ postCount() }}</span>
         }
-        <span class="stat info-badge">Max 10 posts displayed</span>
+        <span class="stat info-badge">Max {{ postLimit() }} posts displayed</span>
       </div>
     </div>
 
@@ -57,9 +73,9 @@
           </div>
         }
       </div>
-      @if (filteredPostCount() > 10) {
+      @if (filteredPostCount() > postLimit()) {
         <div class="limit-notice">
-          <p>Showing first 10 of {{ filteredPostCount() }} matching posts. Refine your search to see more specific results.</p>
+          <p>Showing first {{ postLimit() }} of {{ filteredPostCount() }} matching posts. Increase the limit or refine your search to see more results.</p>
         </div>
       }
     }

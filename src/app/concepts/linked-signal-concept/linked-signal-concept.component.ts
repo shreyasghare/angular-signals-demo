@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+// Component demonstrating Angular linked signal concept
 @Component({
   selector: 'app-linked-signal-concept',
   imports: [RouterLink],
@@ -8,5 +9,4 @@ import { RouterLink } from '@angular/router';
   styleUrl: './linked-signal-concept.component.css'
 })
 export class LinkedSignalConceptComponent {
-
 }

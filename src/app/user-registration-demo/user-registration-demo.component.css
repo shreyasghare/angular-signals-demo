@@ -1,19 +1,19 @@
 .demo-container {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 2rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: #333;
-  background: #f5f5f5;
+  background: #fafafa;
 }
 
 .demo-header {
   text-align: center;
-  margin-bottom: 3rem;
-  padding: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
 }
 
 .back-link {
@@ -22,37 +22,30 @@
   text-decoration: none;
   margin-bottom: 1rem;
   font-weight: 500;
-  transition: color 0.2s;
 }
 
 .back-link:hover {
-  color: #1976d2;
   text-decoration: underline;
 }
 
 .demo-header h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 2rem;
+  font-weight: 600;
   color: #333;
   margin-bottom: 0.5rem;
 }
 
 .intro {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #666;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 section {
-  margin-bottom: 2rem;
   background: white;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.form-section h2 {
-  text-align: center;
+  border: 1px solid #e0e0e0;
 }
 
 .user-form {
@@ -63,13 +56,13 @@ section {
 
 .form-subsection {
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 1.5rem;
   background: #fafafa;
 }
 
 .form-subsection h3 {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #333;
   margin-bottom: 1rem;
@@ -89,62 +82,44 @@ section {
 }
 
 .form-group label {
-  font-weight: 600;
+  font-weight: 500;
   color: #555;
   font-size: 0.95rem;
 }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
-.form-group input[type="number"] {
-  padding: 0.75rem 1rem;
+.form-group input[type="number"],
+.form-group select {
+  padding: 0.75rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
-  transition: border-color 0.2s;
   background: white;
 }
 
-.form-group input[type="text"]:focus,
-.form-group input[type="email"]:focus,
-.form-group input[type="number"]:focus {
+.form-group input:focus,
+.form-group select:focus {
   outline: none;
   border-color: #2196f3;
 }
 
 .signal-value {
   font-size: 0.85rem;
-  color: #1976d2;
-  font-weight: 500;
+  color: #666;
   padding: 0.5rem;
-  background: #e3f2fd;
+  background: #f5f5f5;
   border-radius: 4px;
   font-family: 'Courier New', monospace;
 }
 
-.form-group.computed {
-  background: #fff9e6;
-  padding: 1rem;
-  border-radius: 4px;
-  border-left: 4px solid #ff9800;
-}
-
-.form-group.computed label {
-  color: #e65100;
-}
-
 .computed-display {
-  background: white;
+  background: #f9f9f9;
   padding: 1rem;
   border-radius: 4px;
   margin-top: 0.5rem;
   border: 1px solid #e0e0e0;
-}
-
-.computed-display strong {
-  font-size: 1.1rem;
-  color: #333;
-  display: block;
+  min-height: 2rem;
 }
 
 .computed-display pre {
@@ -160,208 +135,68 @@ section {
   overflow-y: auto;
 }
 
+.computed-display .valid {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.computed-display .invalid {
+  color: #f44336;
+  font-weight: 600;
+}
+
 .explanation {
   font-size: 0.85rem;
   color: #888;
-  font-style: italic;
-  margin-top: 0.5rem;
-  margin-bottom: 0;
-}
-
-.computed-display strong.valid {
-  color: #4caf50;
-}
-
-.computed-display strong.invalid {
-  color: #f44336;
-}
-
-.preferences {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
   margin-top: 0.5rem;
 }
 
-.preferences button {
-  padding: 0.75rem 1.5rem;
-  border: 1px solid #2196f3;
-  background: white;
-  color: #2196f3;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 0.95rem;
-}
-
-.preferences button:hover {
-  background: #2196f3;
-  color: white;
-}
-
-.preferences button.active {
-  background: #2196f3;
-  color: white;
-}
-
-.preferences select {
-  padding: 0.75rem 1rem;
+.source-dropdown {
+  width: 100%;
+  padding: 0.75rem;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   background: white;
   cursor: pointer;
-  min-width: 150px;
 }
 
-.preferences select:focus {
+.source-dropdown:focus {
   outline: none;
   border-color: #2196f3;
 }
 
-.form-group.model {
-  background: #e8f5e9;
-  padding: 1rem;
-  border-radius: 4px;
-  border-left: 4px solid #4caf50;
-}
-
-.form-group.model label {
-  color: #2e7d32;
-}
-
-.model-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.model-demo input {
-  padding: 0.75rem 1rem;
-  border: 1px solid #4caf50;
-  border-radius: 4px;
-  font-size: 1rem;
-  background: white;
-}
-
-.model-demo input:focus {
-  outline: none;
-  border-color: #2e7d32;
-}
-
-.form-group.linked-signal {
-  background: #f3e5f5;
-  padding: 1rem;
-  border-radius: 4px;
-  border-left: 4px solid #9c27b0;
-}
-
-.form-group.linked-signal label {
-  color: #6a1b9a;
-}
-
-.linked-demo {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
-
-.linked-source,
-.linked-target {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem;
-  background: white;
-  border-radius: 4px;
-  border: 1px solid #e0e0e0;
-}
-
-.linked-source label,
-.linked-target label {
-  font-weight: 600;
-  color: #555;
-  font-size: 0.9rem;
-}
-
-.linked-input {
-  padding: 0.75rem 1rem;
-  border: 1px solid #9c27b0;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.2s;
-  background: white;
-}
-
-.linked-input:focus {
-  outline: none;
-  border-color: #7b1fa2;
-}
-
-.signal-value.validated {
-  color: #4caf50;
-  font-weight: 600;
-}
-
-.form-group.child-component {
-  background: #e3f2fd;
-  padding: 1rem;
-  border-radius: 4px;
-  border-left: 4px solid #2196f3;
-}
-
-.form-group.child-component label {
-  color: #1565c0;
-}
-
-.output-signal-display {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
+.output-display {
+  margin-top: 1rem;
+  padding-top: 1rem;
   border-top: 1px solid #e0e0e0;
 }
 
-.output-signal-display label {
+.output-display label {
   font-weight: 600;
-  color: #1565c0;
-  font-size: 0.95rem;
+  color: #555;
   display: block;
   margin-bottom: 0.5rem;
 }
 
 .output-info {
-  background: white;
+  background: #f9f9f9;
   padding: 1rem;
   border-radius: 4px;
-  margin-bottom: 1rem;
+  border: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  border: 1px solid #e0e0e0;
+  gap: 0.5rem;
 }
 
-.output-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem;
-  background: #f5f5f5;
-  border-radius: 4px;
-}
-
-.output-label {
-  font-weight: 600;
-  color: #555;
+.output-info div {
   font-size: 0.9rem;
+  color: #555;
 }
 
-.output-value {
-  font-weight: 500;
-  color: #2196f3;
-  font-size: 0.95rem;
-  font-family: 'Courier New', monospace;
+.output-info strong {
+  color: #333;
+  margin-right: 0.5rem;
 }
 
 .form-actions {
@@ -373,42 +208,19 @@ section {
 }
 
 .btn-reset {
-  padding: 0.875rem 2rem;
-  background: #f44336;
+  padding: 0.75rem 2rem;
+  background: #666;
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .btn-reset:hover {
-  background: #d32f2f;
-}
-
-.effects-info {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e0e0e0;
-  background: #e3f2fd;
-  padding: 1.5rem;
-  border-radius: 4px;
-}
-
-.effects-info h3 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #1565c0;
-  margin-bottom: 0.75rem;
-}
-
-.effects-info p {
-  color: #555;
-  line-height: 1.6;
-  margin: 0.5rem 0;
-  font-size: 0.95rem;
+  background: #555;
 }
 
 @media (max-width: 768px) {
@@ -417,19 +229,11 @@ section {
   }
 
   .demo-header h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   section {
     padding: 1.5rem;
-  }
-
-  .preferences {
-    flex-direction: column;
-  }
-
-  .preferences select {
-    width: 100%;
   }
 
   .computed-display.summary {
@@ -438,19 +242,18 @@ section {
 }
 
 .computed-display.summary::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .computed-display.summary::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 4px;
 }
 
 .computed-display.summary::-webkit-scrollbar-thumb {
-  background: #2196f3;
-  border-radius: 4px;
+  background: #ccc;
+  border-radius: 3px;
 }
 
 .computed-display.summary::-webkit-scrollbar-thumb:hover {
-  background: #1976d2;
+  background: #bbb;
 }

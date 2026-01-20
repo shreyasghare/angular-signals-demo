@@ -8,15 +8,16 @@ import { CommonModule } from '@angular/common';
   styleUrl: './scroll-to-top.component.css'
 })
 export class ScrollToTopComponent {
-  showButton = false;
+  // Show button when user scrolls down more than 300px
+  showButton: boolean = false;
 
   @HostListener('window:scroll', [])
-  onWindowScroll() {
-    // Show button when user scrolls down more than 300px
+  onWindowScroll(): void {
     this.showButton = window.scrollY > 300;
   }
 
-  scrollToTop() {
+  // Smooth scroll to top of page
+  scrollToTop(): void {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'

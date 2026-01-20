@@ -8,9 +8,11 @@ import { ModelConceptComponent } from './concepts/model-concept/model-concept.co
 import { InputConceptComponent } from './concepts/input-concept/input-concept.component';
 import { OutputConceptComponent } from './concepts/output-concept/output-concept.component';
 import { LinkedSignalConceptComponent } from './concepts/linked-signal-concept/linked-signal-concept.component';
+import { ResourceConceptComponent } from './concepts/resource-concept/resource-concept.component';
 import { UserRegistrationDemoComponent } from './user-registration-demo/user-registration-demo.component';
 import { RxresourceDemoComponent } from './rxresource-demo/rxresource-demo.component';
 
+// Application routes configuration
 export const routes: Routes = [
   {
     path: '',
@@ -55,5 +57,9 @@ export const routes: Routes = [
   {
     path: 'concepts/linked-signal',
     component: LinkedSignalConceptComponent
+  },
+  {
+    path: 'concepts/resource',
+    component: ResourceConceptComponent
   }
 ];
