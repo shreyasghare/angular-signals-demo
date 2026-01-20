@@ -1,9 +1,8 @@
-import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, effect, linkedSignal, model, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { UserFormComponent, UserSubmittedEvent } from '../user-form/user-form.component';
+import { UserSubmittedEvent } from '../user-form/user-form.component';
 
 // Interface for Post data from API
 export interface Post {
@@ -15,7 +14,7 @@ export interface Post {
 
 @Component({
   selector: 'app-signals-demo',
-  imports: [JsonPipe, UserFormComponent, RouterLink],
+  imports: [ RouterLink],
   templateUrl: './signals-demo.component.html',
   styleUrl: './signals-demo.component.css'
 })
