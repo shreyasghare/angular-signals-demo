@@ -360,17 +360,6 @@ filteredItems$ = combineLatest([
     description: 'Signals and RxJS can work together! Use <code>@angular/core/rxjs-interop</code> to bridge between them:',
     examples: [
       {
-        title: 'Convert Observable to Signal',
-        code: `import &#123; toSignal &#125; from '@angular/core/rxjs-interop';
-
-// Convert Observable to Signal
-const data$ = this.http.get('/api/data');
-const dataSignal = toSignal(data$);
-
-// Use in template
-&#123;&#123; dataSignal() &#125;&#125;`
-      },
-      {
         title: 'Convert Signal to Observable',
         code: `import &#123; toObservable &#125; from '@angular/core/rxjs-interop';
 
@@ -382,6 +371,17 @@ const searchQuery$ = toObservable(searchQuery);
 const debounced$ = searchQuery$.pipe(
   debounceTime(300)
 );`
+      },
+      {
+        title: 'Convert Observable to Signal',
+        code: `import &#123; toSignal &#125; from '@angular/core/rxjs-interop';
+
+// Convert Observable to Signal
+const data$ = this.http.get('/api/data');
+const dataSignal = toSignal(data$);
+
+// Use in template
+&#123;&#123; dataSignal() &#125;&#125;`
       }
     ]
   };

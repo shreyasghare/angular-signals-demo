@@ -68,6 +68,27 @@
       </div>
     </div>
 
+    <!-- Code Examples Section -->
+    <div class="concept-section">
+      <h2>Side-by-Side Code Examples</h2>
+
+      @for (example of codeExamples; track example.title) {
+        <div class="example-section">
+          <h3>{{ example.title }}</h3>
+          <div class="example-comparison">
+            <div class="code-example">
+              <h4>RxJS Approach</h4>
+              <pre><code [innerHTML]="example.rxjsCode"></code></pre>
+            </div>
+            <div class="code-example">
+              <h4>Signals Approach</h4>
+              <pre><code [innerHTML]="example.signalsCode"></code></pre>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
     <!-- Interactive Demo Section -->
     <div class="concept-section">
       <h2>{{ interactiveDemo.title }}</h2>
@@ -376,7 +397,7 @@
         @for (example of interoperability.examples; track example.title) {
           <div class="code-example">
             <h4>{{ example.title }}</h4>
-            <pre ngNonBindable><code>{{ example.code }}</code></pre>
+            <pre><code [innerHTML]="example.code"></code></pre>
           </div>
         }
       </div>
