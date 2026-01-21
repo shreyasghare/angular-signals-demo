@@ -1,0 +1,407 @@
+<div class="concept-container">
+  <header class="concept-header">
+    <a routerLink="/" class="back-link">← Back to Home</a>
+    <h1>{{ header.title }}</h1>
+    <p class="concept-description">{{ header.description }}</p>
+    <p class="video-reference">
+      <a [href]="header.videoUrl" target="_blank" rel="noopener noreferrer" class="video-link">
+        {{ header.videoText }}
+      </a>
+    </p>
+  </header>
+
+  <section class="concept-content">
+    <!-- Overview Section -->
+    <div class="concept-section">
+      <h2>Overview</h2>
+      <p [innerHTML]="overview"></p>
+    </div>
+
+    <!-- Key Differences Section -->
+    <div class="concept-section">
+      <h2>Key Differences</h2>
+
+      <div class="comparison-grid">
+        @for (item of comparisonItems; track item.title) {
+          <div class="comparison-item">
+            <h3>{{ item.title }}</h3>
+            <div class="comparison-content">
+              <div class="rxjs-box">
+                <strong>{{ item.rxjs.label }}</strong>
+                @if (item.rxjs.badge) {
+                  <span [class]="'badge ' + item.rxjs.badgeClass">
+                    {{ item.rxjs.badge }}
+                  </span>
+                }
+                @if (item.rxjs.description) {
+                  <p>{{ item.rxjs.description }}</p>
+                }
+                @if (item.rxjs.useCases) {
+                  <ul>
+                    @for (useCase of item.rxjs.useCases; track useCase) {
+                      <li>{{ useCase }}</li>
+                    }
+                  </ul>
+                }
+              </div>
+              <div class="signals-box">
+                <strong>{{ item.signals.label }}</strong>
+                @if (item.signals.badge) {
+                  <span [class]="'badge ' + item.signals.badgeClass">
+                    {{ item.signals.badge }}
+                  </span>
+                }
+                @if (item.signals.description) {
+                  <p>{{ item.signals.description }}</p>
+                }
+                @if (item.signals.useCases) {
+                  <ul>
+                    @for (useCase of item.signals.useCases; track useCase) {
+                      <li>{{ useCase }}</li>
+                    }
+                  </ul>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Interactive Demo Section -->
+    <div class="concept-section">
+      <h2>{{ interactiveDemo.title }}</h2>
+      <p>{{ interactiveDemo.description }}</p>
+
+      <!-- User Info Demo -->
+      <div class="demo-section">
+        <h3>{{ interactiveDemo.userFormTitle }}</h3>
+        <div class="demo-comparison">
+          <div class="demo-panel rxjs-panel">
+            <h4>🔶 RxJS Implementation</h4>
+            <div class="form-group">
+              <label>First Name:</label>
+              <input
+                type="text"
+                [value]="firstNameRxJSValue"
+                (input)="onFirstNameRxJSInput($event)"
+                placeholder="Enter first name">
+            </div>
+            <div class="form-group">
+              <label>Last Name:</label>
+              <input
+                type="text"
+                [value]="lastNameRxJSValue"
+                (input)="onLastNameRxJSInput($event)"
+                placeholder="Enter last name">
+            </div>
+            <div class="form-group">
+              <label>Age:</label>
+              <input
+                type="number"
+                [value]="ageRxJSValue"
+                (input)="onAgeRxJSInput($event)"
+                placeholder="Enter age">
+            </div>
+            <div class="result-box">
+              <strong>Full Name:</strong> {{ firstNameRxJSValue }} {{ lastNameRxJSValue }}<br>
+              <strong>Age:</strong> {{ ageRxJSValue }}<br>
+              <strong>Is Adult:</strong> {{ ageRxJSValue >= 18 ? 'Yes' : 'No' }}
+            </div>
+          </div>
+
+          <div class="demo-panel signals-panel">
+            <h4>🔷 Signals Implementation</h4>
+            <div class="form-group">
+              <label>First Name:</label>
+              <input
+                type="text"
+                [value]="firstNameSignal()"
+                (input)="onFirstNameSignalInput($event)"
+                placeholder="Enter first name">
+            </div>
+            <div class="form-group">
+              <label>Last Name:</label>
+              <input
+                type="text"
+                [value]="lastNameSignal()"
+                (input)="onLastNameSignalInput($event)"
+                placeholder="Enter last name">
+            </div>
+            <div class="form-group">
+              <label>Age:</label>
+              <input
+                type="number"
+                [value]="ageSignal()"
+                (input)="onAgeSignalInput($event)"
+                placeholder="Enter age">
+            </div>
+            <div class="result-box">
+              <strong>Full Name:</strong> {{ fullNameSignal() }}<br>
+              <strong>Age:</strong> {{ ageSignal() }}<br>
+              <strong>Is Adult:</strong> {{ userInfoSignal().isAdult ? 'Yes' : 'No' }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Counter Demo -->
+      <div class="demo-section">
+        <h3>{{ interactiveDemo.counterTitle }}</h3>
+        <div class="demo-comparison">
+          <div class="demo-panel rxjs-panel">
+            <h4>🔶 RxJS Implementation</h4>
+            <div class="counter-controls">
+              <button (click)="decrementCounterRxJS()">-</button>
+              <span class="counter-value">{{ counterRxJSValue }}</span>
+              <button (click)="incrementCounterRxJS()">+</button>
+            </div>
+            <div class="result-box">
+              <strong>Double Counter:</strong> {{ counterRxJSValue * 2 }}
+            </div>
+          </div>
+
+          <div class="demo-panel signals-panel">
+            <h4>🔷 Signals Implementation</h4>
+            <div class="counter-controls">
+              <button (click)="decrementCounterSignal()">-</button>
+              <span class="counter-value">{{ counterSignal() }}</span>
+              <button (click)="incrementCounterSignal()">+</button>
+            </div>
+            <div class="result-box">
+              <strong>Double Counter:</strong> {{ doubleCounterSignal() }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search/Filter Demo -->
+      <div class="demo-section">
+        <h3>{{ interactiveDemo.searchTitle }}</h3>
+        <div class="demo-comparison">
+          <div class="demo-panel rxjs-panel">
+            <h4>🔶 RxJS Implementation</h4>
+            <div class="form-group">
+              <label>Search:</label>
+              <input
+                type="text"
+                [value]="filterTextRxJSValue"
+                (input)="onFilterTextRxJSInput($event)"
+                placeholder="Filter items...">
+            </div>
+            <div class="result-box">
+              <strong>Filtered Items ({{ filteredItemsRxJSValue.length }}):</strong>
+              <ul class="filter-list">
+                @for (item of filteredItemsRxJSValue; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+          </div>
+
+          <div class="demo-panel signals-panel">
+            <h4>🔷 Signals Implementation</h4>
+            <div class="form-group">
+              <label>Search:</label>
+              <input
+                type="text"
+                [value]="filterTextSignal()"
+                (input)="onFilterTextSignalInput($event)"
+                placeholder="Filter items...">
+            </div>
+            <div class="result-box">
+              <strong>Filtered Items ({{ filteredItemsSignal().length }}):</strong>
+              <ul class="filter-list">
+                @for (item of filteredItemsSignal(); track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toggle Demo -->
+      <div class="demo-section">
+        <h3>{{ interactiveDemo.toggleTitle }}</h3>
+        <div class="demo-comparison">
+          <div class="demo-panel rxjs-panel">
+            <h4>🔶 RxJS Implementation</h4>
+            <div class="toggle-controls">
+              <button
+                (click)="toggleDarkModeRxJS()"
+                [class.active]="isDarkModeRxJSValue">
+                {{ isDarkModeRxJSValue ? '🌙 Dark Mode' : '☀️ Light Mode' }}
+              </button>
+            </div>
+            <div class="result-box">
+              <strong>Current Mode:</strong> {{ isDarkModeRxJSValue ? 'Dark' : 'Light' }}
+            </div>
+          </div>
+
+          <div class="demo-panel signals-panel">
+            <h4>🔷 Signals Implementation</h4>
+            <div class="toggle-controls">
+              <button
+                (click)="toggleDarkModeSignal()"
+                [class.active]="isDarkModeSignal()">
+                {{ isDarkModeSignal() ? '🌙 Dark Mode' : '☀️ Light Mode' }}
+              </button>
+            </div>
+            <div class="result-box">
+              <strong>Current Mode:</strong> {{ isDarkModeSignal() ? 'Dark' : 'Light' }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Validation Demo -->
+      <div class="demo-section">
+        <h3>{{ interactiveDemo.validationTitle }}</h3>
+        <div class="demo-comparison">
+          <div class="demo-panel rxjs-panel">
+            <h4>🔶 RxJS Implementation</h4>
+            <div class="form-group">
+              <label>Email:</label>
+              <input
+                type="email"
+                [value]="emailRxJSValue"
+                (input)="onEmailRxJSInput($event)"
+                placeholder="Enter email"
+                [class.valid]="isEmailValidRxJSValue"
+                [class.invalid]="emailRxJSValue && !isEmailValidRxJSValue">
+              @if (emailRxJSValue) {
+                <span class="validation-message">
+                  {{ isEmailValidRxJSValue ? '✓ Valid' : '✗ Invalid' }}
+                </span>
+              }
+            </div>
+            <div class="form-group">
+              <label>Password:</label>
+              <input
+                type="password"
+                [value]="passwordRxJSValue"
+                (input)="onPasswordRxJSInput($event)"
+                placeholder="Enter password (min 8 chars)"
+                [class.valid]="isPasswordValidRxJSValue"
+                [class.invalid]="passwordRxJSValue && !isPasswordValidRxJSValue">
+              @if (passwordRxJSValue) {
+                <span class="validation-message">
+                  {{ isPasswordValidRxJSValue ? '✓ Valid' : '✗ Invalid (min 8 characters)' }}
+                </span>
+              }
+            </div>
+            <div class="result-box">
+              <strong>Form Status:</strong>
+              <span [class.valid]="isFormValidRxJSValue" [class.invalid]="!isFormValidRxJSValue">
+                {{ isFormValidRxJSValue ? '✓ Valid - Ready to Submit' : '✗ Invalid' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="demo-panel signals-panel">
+            <h4>🔷 Signals Implementation</h4>
+            <div class="form-group">
+              <label>Email:</label>
+              <input
+                type="email"
+                [value]="emailSignal()"
+                (input)="onEmailSignalInput($event)"
+                placeholder="Enter email"
+                [class.valid]="isEmailValidSignal()"
+                [class.invalid]="emailSignal() && !isEmailValidSignal()">
+              @if (emailSignal()) {
+                <span class="validation-message">
+                  {{ isEmailValidSignal() ? '✓ Valid' : '✗ Invalid' }}
+                </span>
+              }
+            </div>
+            <div class="form-group">
+              <label>Password:</label>
+              <input
+                type="password"
+                [value]="passwordSignal()"
+                (input)="onPasswordSignalInput($event)"
+                placeholder="Enter password (min 8 chars)"
+                [class.valid]="isPasswordValidSignal()"
+                [class.invalid]="passwordSignal() && !isPasswordValidSignal()">
+              @if (passwordSignal()) {
+                <span class="validation-message">
+                  {{ isPasswordValidSignal() ? '✓ Valid' : '✗ Invalid (min 8 characters)' }}
+                </span>
+              }
+            </div>
+            <div class="result-box">
+              <strong>Form Status:</strong>
+              <span [class.valid]="isFormValidSignal()" [class.invalid]="!isFormValidSignal()">
+                {{ isFormValidSignal() ? '✓ Valid - Ready to Submit' : '✗ Invalid' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- When to Use Section -->
+    <div class="concept-section">
+      <h2>When to Use What?</h2>
+
+      <div class="when-to-use">
+        <div class="use-case rxjs-use">
+          <h3>{{ useCases.rxjs.title }}</h3>
+          <ul>
+            @for (item of useCases.rxjs.items; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </div>
+
+        <div class="use-case signals-use">
+          <h3>{{ useCases.signals.title }}</h3>
+          <ul>
+            @for (item of useCases.signals.items; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interoperability Section -->
+    <div class="concept-section">
+      <h2>Interoperability</h2>
+      <p [innerHTML]="interoperability.description"></p>
+
+      <div class="interop-examples">
+        @for (example of interoperability.examples; track example.title) {
+          <div class="code-example">
+            <h4>{{ example.title }}</h4>
+            <pre ngNonBindable><code>{{ example.code }}</code></pre>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="concept-section">
+      <h2>Summary</h2>
+      <div class="summary-box">
+        @for (paragraph of summary.paragraphs; track paragraph) {
+          <p [innerHTML]="paragraph"></p>
+        }
+      </div>
+    </div>
+
+    <!-- Documentation Links -->
+    <div class="concept-section">
+      <h2>Documentation</h2>
+      <div class="doc-links">
+        @for (link of docLinks; track link.url) {
+          <a [href]="link.url" target="_blank" rel="noopener noreferrer" class="doc-link">
+            {{ link.title }}
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+</div>
