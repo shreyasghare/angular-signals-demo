@@ -1,0 +1,171 @@
+<div class="concept-container">
+  <header class="concept-header">
+    <a routerLink="/" class="back-link">← Back to Home</a>
+    <h1>Zone.js vs Signals</h1>
+    <p class="concept-description">Understanding the fundamental differences between Zone.js change detection and Signals reactivity</p>
+  </header>
+
+  <section class="concept-content">
+    <div class="concept-section">
+      <h2>Overview</h2>
+      <p>
+        Angular traditionally used <strong>Zone.js</strong> for change detection, which monitors the entire component tree for changes.
+        <strong>Signals</strong> introduce a more granular, fine-grained reactivity model that only updates specific parts of the application
+        that have changed, enabling better performance and the possibility of zoneless Angular applications.
+      </p>
+    </div>
+
+    <div class="concept-section">
+      <h2>Visual Comparison</h2>
+      <div class="image-container">
+        <img
+          src="/images/zonejs-vs-signals.gif"
+          alt="Zone.js vs Signals Comparison Diagram"
+          class="comparison-image">
+      </div>
+    </div>
+
+    <div class="concept-section">
+      <h2>Zone.js Change Detection</h2>
+      <div class="comparison-box zonejs-box">
+        <h3>How Zone.js Works</h3>
+        <ul>
+          <li><strong>Tree-wide Detection:</strong> Zone.js patches async operations and triggers change detection across the entire component tree</li>
+          <li><strong>CD Blocks Everywhere:</strong> Every component in the tree gets checked for changes, even if unrelated to the event</li>
+          <li><strong>Comprehensive Checking:</strong> When an event occurs, Zone.js checks all components marked for change detection</li>
+          <li><strong>Automatic but Broad:</strong> No need to manually mark what changed, but checks everything</li>
+        </ul>
+        <div class="code-example">
+          <h4>Zone.js Approach</h4>
+          <pre><code>// Zone.js automatically patches:
+- setTimeout, setInterval
+- DOM events
+- XMLHttpRequest
+- Promises
+// When any of these occur, Angular checks the entire component tree</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-section">
+      <h2>Signals Reactivity</h2>
+      <div class="comparison-box signals-box">
+        <h3>How Signals Work</h3>
+        <ul>
+          <li><strong>Fine-grained Updates:</strong> Only components that consume specific signals get updated</li>
+          <li><strong>Producer-Consumer Model:</strong> Signals (producers) notify their consumers when values change</li>
+          <li><strong>Targeted Updates:</strong> Empty blocks in the tree don't get checked - only Consumer and Producer blocks</li>
+          <li><strong>Explicit Dependencies:</strong> Dependencies are tracked automatically, enabling precise updates</li>
+        </ul>
+        <div class="code-example">
+          <h4>Signals Approach</h4>
+          <pre><code>// Signals create explicit producer-consumer relationships
+count = signal(0);
+doubleCount = computed(() => count() * 2);
+
+// Only components reading count() or doubleCount()
+// will update when count changes</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-section">
+      <h2>Key Differences</h2>
+      <div class="differences-grid">
+        <div class="difference-item">
+          <h3>Change Detection Scope</h3>
+          <div class="zonejs-diff">
+            <strong>Zone.js:</strong> Checks entire component tree
+          </div>
+          <div class="signals-diff">
+            <strong>Signals:</strong> Updates only specific consumers
+          </div>
+        </div>
+
+        <div class="difference-item">
+          <h3>Performance</h3>
+          <div class="zonejs-diff">
+            <strong>Zone.js:</strong> Can be slower with large component trees
+          </div>
+          <div class="signals-diff">
+            <strong>Signals:</strong> More efficient, updates only what changed
+          </div>
+        </div>
+
+        <div class="difference-item">
+          <h3>Dependency Tracking</h3>
+          <div class="zonejs-diff">
+            <strong>Zone.js:</strong> Implicit, based on component tree structure
+          </div>
+          <div class="signals-diff">
+            <strong>Signals:</strong> Explicit, tracked automatically when signals are read
+          </div>
+        </div>
+
+        <div class="difference-item">
+          <h3>Zoneless Support</h3>
+          <div class="zonejs-diff">
+            <strong>Zone.js:</strong> Required for traditional Angular apps
+          </div>
+          <div class="signals-diff">
+            <strong>Signals:</strong> Enables zoneless Angular applications
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-section">
+      <h2>When to Use Each</h2>
+      <div class="when-to-use-grid">
+        <div class="use-case-box">
+          <h3>✅ Use Zone.js When:</h3>
+          <ul>
+            <li>Working with existing Angular applications</li>
+            <li>Need automatic change detection without explicit signal management</li>
+            <li>Migrating legacy Angular code</li>
+            <li>Working with third-party libraries that rely on Zone.js</li>
+          </ul>
+        </div>
+
+        <div class="use-case-box">
+          <h3>✅ Use Signals When:</h3>
+          <ul>
+            <li>Building new Angular applications</li>
+            <li>Need fine-grained reactivity and better performance</li>
+            <li>Want to enable zoneless Angular applications</li>
+            <li>Need explicit dependency tracking</li>
+            <li>Working with component state management</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-section">
+      <h2>Migration Path</h2>
+      <p>
+        Angular supports both Zone.js and Signals simultaneously. You can gradually migrate to Signals:
+      </p>
+      <ol>
+        <li>Start using signals for new component state</li>
+        <li>Replace BehaviorSubjects with signals where appropriate</li>
+        <li>Use computed() for derived values</li>
+        <li>Gradually move to zoneless mode as you adopt more signals</li>
+      </ol>
+    </div>
+
+    <div class="concept-section">
+      <h2>Documentation</h2>
+      <div class="doc-links">
+        <a href="https://angular.dev/guide/signals" target="_blank" rel="noopener noreferrer" class="doc-link">
+          Angular Signals Documentation →
+        </a>
+        <a href="https://angular.dev/guide/change-detection" target="_blank" rel="noopener noreferrer" class="doc-link">
+          Change Detection Guide →
+        </a>
+        <a href="https://angular.dev/guide/zoneless" target="_blank" rel="noopener noreferrer" class="doc-link">
+          Zoneless Angular Guide →
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

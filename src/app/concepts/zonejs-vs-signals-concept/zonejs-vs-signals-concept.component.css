@@ -1,0 +1,291 @@
+.concept-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.concept-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.back-link {
+  display: inline-block;
+  color: #2196f3;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #1976d2;
+  text-decoration: underline;
+}
+
+.concept-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.concept-description {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.concept-content {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.concept-section {
+  margin-bottom: 2rem;
+}
+
+.concept-section:last-child {
+  margin-bottom: 0;
+}
+
+.concept-section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.concept-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.concept-section p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.concept-section code {
+  background: #f5f5f5;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  color: #d63384;
+}
+
+.concept-section pre {
+  background: #f5f5f5;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  border: 1px solid #e0e0e0;
+}
+
+.concept-section pre code {
+  background: none;
+  padding: 0;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.concept-section ul,
+.concept-section ol {
+  color: #555;
+  line-height: 1.8;
+  padding-left: 1.5rem;
+}
+
+.concept-section li {
+  margin-bottom: 0.5rem;
+}
+
+/* Image Container */
+.image-container {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.comparison-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.image-placeholder {
+  padding: 2rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+  border: 2px dashed #ccc;
+  color: #666;
+}
+
+/* Comparison Boxes */
+.comparison-box {
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.zonejs-box {
+  background: #fff3e0;
+  border-left: 4px solid #ff9800;
+}
+
+.signals-box {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+}
+
+.comparison-box h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.comparison-box ul {
+  margin-top: 1rem;
+}
+
+.comparison-box li {
+  margin-bottom: 0.75rem;
+}
+
+/* Code Example */
+.code-example {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+.code-example h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Differences Grid */
+.differences-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.difference-item {
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.difference-item h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.zonejs-diff {
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  background: #fff3e0;
+  border-left: 3px solid #ff9800;
+  border-radius: 4px;
+}
+
+.signals-diff {
+  padding: 0.75rem;
+  background: #e3f2fd;
+  border-left: 3px solid #2196f3;
+  border-radius: 4px;
+}
+
+/* When to Use Grid */
+.when-to-use-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.use-case-box {
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.use-case-box:first-child {
+  background: #fff3e0;
+  border-left: 4px solid #ff9800;
+}
+
+.use-case-box:last-child {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+}
+
+.use-case-box h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.use-case-box ul {
+  margin-top: 1rem;
+}
+
+/* Documentation Links */
+.doc-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.doc-link {
+  display: inline-block;
+  color: #2196f3;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+
+.doc-link:hover {
+  color: #1976d2;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .concept-container {
+    padding: 1rem;
+  }
+
+  .concept-header h1 {
+    font-size: 2rem;
+  }
+
+  .concept-content {
+    padding: 1.5rem;
+  }
+
+  .differences-grid,
+  .when-to-use-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -10,6 +10,7 @@ import { OutputConceptComponent } from './concepts/output-concept/output-concept
 import { LinkedSignalConceptComponent } from './concepts/linked-signal-concept/linked-signal-concept.component';
 import { ResourceConceptComponent } from './concepts/resource-concept/resource-concept.component';
 import { RxjsVsSignalsConceptComponent } from './concepts/rxjs-vs-signals-concept/rxjs-vs-signals-concept.component';
+import { ZonejsVsSignalsConceptComponent } from './concepts/zonejs-vs-signals-concept/zonejs-vs-signals-concept.component';
 import { UserRegistrationDemoComponent } from './user-registration-demo/user-registration-demo.component';
 import { RxresourceDemoComponent } from './rxresource-demo/rxresource-demo.component';
 
@@ -66,5 +67,9 @@ export const routes: Routes = [
   {
     path: 'concepts/rxjs-vs-signals',
     component: RxjsVsSignalsConceptComponent
+  },
+  {
+    path: 'concepts/zonejs-vs-signals',
+    component: ZonejsVsSignalsConceptComponent
   }
 ];

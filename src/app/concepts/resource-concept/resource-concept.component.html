@@ -13,27 +13,16 @@
 
     <div class="concept-section">
       <h2>Usage</h2>
-      <pre><code>import {{ '{' }} resource {{ '}' }} from '&#64;angular/core';
-import {{ '{' }} rxResource {{ '}' }} from '&#64;angular/core/rxjs-interop';
-import {{ '{' }} HttpClient {{ '}' }} from '&#64;angular/common/http';
 
-// Using resource() with fetch
-const userId = signal('123');
-const userResource = resource({{ '{' }}
-  params: () => ({{ '{' }} id: userId() {{ '}' }}),
-  loader: ({{ '{' }} params {{ '}' }}) => fetchUser(params)
-{{ '}' }});
+      <div class="example-block">
+        <h3>Example 1: Using resource() with fetch API</h3>
+        <pre><code>{{ resourceExample }}</code></pre>
+      </div>
 
-// Using rxResource() with HttpClient
-const postsResource = rxResource({{ '{' }}
-  request: () => ({{ '{' }} {{ '}' }}),
-  loader: () => this.http.get&lt;Post[]&gt;('https://api.example.com/posts')
-{{ '}' }});
-
-// Access resource value
-const posts = computed(() => postsResource.value() ?? []);
-const isLoading = computed(() => postsResource.isLoading());
-const error = computed(() => postsResource.error());</code></pre>
+      <div class="example-block">
+        <h3>Example 2: Using rxResource() with HttpClient</h3>
+        <pre><code>{{ rxResourceExample }}</code></pre>
+      </div>
     </div>
 
     <div class="concept-section">
