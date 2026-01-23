@@ -4,7 +4,12 @@
     <h1>{{ header.title }}</h1>
     <p class="concept-description">{{ header.description }}</p>
     <p class="video-reference">
-      <a [href]="header.videoUrl" target="_blank" rel="noopener noreferrer" class="video-link">
+      <a
+        [href]="header.videoUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="video-link"
+      >
         {{ header.videoText }}
       </a>
     </p>
@@ -106,7 +111,8 @@
                 type="text"
                 [value]="firstNameRxJSValue"
                 (input)="onFirstNameRxJSInput($event)"
-                placeholder="Enter first name">
+                placeholder="Enter first name"
+              />
             </div>
             <div class="form-group">
               <label>Last Name:</label>
@@ -114,7 +120,8 @@
                 type="text"
                 [value]="lastNameRxJSValue"
                 (input)="onLastNameRxJSInput($event)"
-                placeholder="Enter last name">
+                placeholder="Enter last name"
+              />
             </div>
             <div class="form-group">
               <label>Age:</label>
@@ -122,11 +129,13 @@
                 type="number"
                 [value]="ageRxJSValue"
                 (input)="onAgeRxJSInput($event)"
-                placeholder="Enter age">
+                placeholder="Enter age"
+              />
             </div>
             <div class="result-box">
-              <strong>Full Name:</strong> {{ firstNameRxJSValue }} {{ lastNameRxJSValue }}<br>
-              <strong>Age:</strong> {{ ageRxJSValue }}<br>
+              <strong>Full Name:</strong> {{ firstNameRxJSValue }}
+              {{ lastNameRxJSValue }}<br />
+              <strong>Age:</strong> {{ ageRxJSValue }}<br />
               <strong>Is Adult:</strong> {{ ageRxJSValue >= 18 ? 'Yes' : 'No' }}
             </div>
           </div>
@@ -139,7 +148,8 @@
                 type="text"
                 [value]="firstNameSignal()"
                 (input)="onFirstNameSignalInput($event)"
-                placeholder="Enter first name">
+                placeholder="Enter first name"
+              />
             </div>
             <div class="form-group">
               <label>Last Name:</label>
@@ -147,7 +157,8 @@
                 type="text"
                 [value]="lastNameSignal()"
                 (input)="onLastNameSignalInput($event)"
-                placeholder="Enter last name">
+                placeholder="Enter last name"
+              />
             </div>
             <div class="form-group">
               <label>Age:</label>
@@ -155,12 +166,14 @@
                 type="number"
                 [value]="ageSignal()"
                 (input)="onAgeSignalInput($event)"
-                placeholder="Enter age">
+                placeholder="Enter age"
+              />
             </div>
             <div class="result-box">
-              <strong>Full Name:</strong> {{ fullNameSignal() }}<br>
-              <strong>Age:</strong> {{ ageSignal() }}<br>
-              <strong>Is Adult:</strong> {{ userInfoSignal().isAdult ? 'Yes' : 'No' }}
+              <strong>Full Name:</strong> {{ fullNameSignal() }}<br />
+              <strong>Age:</strong> {{ ageSignal() }}<br />
+              <strong>Is Adult:</strong>
+              {{ userInfoSignal().isAdult ? 'Yes' : 'No' }}
             </div>
           </div>
         </div>
@@ -208,10 +221,13 @@
                 type="text"
                 [value]="filterTextRxJSValue"
                 (input)="onFilterTextRxJSInput($event)"
-                placeholder="Filter items...">
+                placeholder="Filter items..."
+              />
             </div>
             <div class="result-box">
-              <strong>Filtered Items ({{ filteredItemsRxJSValue.length }}):</strong>
+              <strong
+                >Filtered Items ({{ filteredItemsRxJSValue.length }}):</strong
+              >
               <ul class="filter-list">
                 @for (item of filteredItemsRxJSValue; track item) {
                   <li>{{ item }}</li>
@@ -228,10 +244,13 @@
                 type="text"
                 [value]="filterTextSignal()"
                 (input)="onFilterTextSignalInput($event)"
-                placeholder="Filter items...">
+                placeholder="Filter items..."
+              />
             </div>
             <div class="result-box">
-              <strong>Filtered Items ({{ filteredItemsSignal().length }}):</strong>
+              <strong
+                >Filtered Items ({{ filteredItemsSignal().length }}):</strong
+              >
               <ul class="filter-list">
                 @for (item of filteredItemsSignal(); track item) {
                   <li>{{ item }}</li>
@@ -251,12 +270,14 @@
             <div class="toggle-controls">
               <button
                 (click)="toggleDarkModeRxJS()"
-                [class.active]="isDarkModeRxJSValue">
+                [class.active]="isDarkModeRxJSValue"
+              >
                 {{ isDarkModeRxJSValue ? '🌙 Dark Mode' : '☀️ Light Mode' }}
               </button>
             </div>
             <div class="result-box">
-              <strong>Current Mode:</strong> {{ isDarkModeRxJSValue ? 'Dark' : 'Light' }}
+              <strong>Current Mode:</strong>
+              {{ isDarkModeRxJSValue ? 'Dark' : 'Light' }}
             </div>
           </div>
 
@@ -265,12 +286,14 @@
             <div class="toggle-controls">
               <button
                 (click)="toggleDarkModeSignal()"
-                [class.active]="isDarkModeSignal()">
+                [class.active]="isDarkModeSignal()"
+              >
                 {{ isDarkModeSignal() ? '🌙 Dark Mode' : '☀️ Light Mode' }}
               </button>
             </div>
             <div class="result-box">
-              <strong>Current Mode:</strong> {{ isDarkModeSignal() ? 'Dark' : 'Light' }}
+              <strong>Current Mode:</strong>
+              {{ isDarkModeSignal() ? 'Dark' : 'Light' }}
             </div>
           </div>
         </div>
@@ -290,7 +313,8 @@
                 (input)="onEmailRxJSInput($event)"
                 placeholder="Enter email"
                 [class.valid]="isEmailValidRxJSValue"
-                [class.invalid]="emailRxJSValue && !isEmailValidRxJSValue">
+                [class.invalid]="emailRxJSValue && !isEmailValidRxJSValue"
+              />
               @if (emailRxJSValue) {
                 <span class="validation-message">
                   {{ isEmailValidRxJSValue ? '✓ Valid' : '✗ Invalid' }}
@@ -305,17 +329,29 @@
                 (input)="onPasswordRxJSInput($event)"
                 placeholder="Enter password (min 8 chars)"
                 [class.valid]="isPasswordValidRxJSValue"
-                [class.invalid]="passwordRxJSValue && !isPasswordValidRxJSValue">
+                [class.invalid]="passwordRxJSValue && !isPasswordValidRxJSValue"
+              />
               @if (passwordRxJSValue) {
                 <span class="validation-message">
-                  {{ isPasswordValidRxJSValue ? '✓ Valid' : '✗ Invalid (min 8 characters)' }}
+                  {{
+                    isPasswordValidRxJSValue
+                      ? '✓ Valid'
+                      : '✗ Invalid (min 8 characters)'
+                  }}
                 </span>
               }
             </div>
             <div class="result-box">
               <strong>Form Status:</strong>
-              <span [class.valid]="isFormValidRxJSValue" [class.invalid]="!isFormValidRxJSValue">
-                {{ isFormValidRxJSValue ? '✓ Valid - Ready to Submit' : '✗ Invalid' }}
+              <span
+                [class.valid]="isFormValidRxJSValue"
+                [class.invalid]="!isFormValidRxJSValue"
+              >
+                {{
+                  isFormValidRxJSValue
+                    ? '✓ Valid - Ready to Submit'
+                    : '✗ Invalid'
+                }}
               </span>
             </div>
           </div>
@@ -330,7 +366,8 @@
                 (input)="onEmailSignalInput($event)"
                 placeholder="Enter email"
                 [class.valid]="isEmailValidSignal()"
-                [class.invalid]="emailSignal() && !isEmailValidSignal()">
+                [class.invalid]="emailSignal() && !isEmailValidSignal()"
+              />
               @if (emailSignal()) {
                 <span class="validation-message">
                   {{ isEmailValidSignal() ? '✓ Valid' : '✗ Invalid' }}
@@ -345,17 +382,29 @@
                 (input)="onPasswordSignalInput($event)"
                 placeholder="Enter password (min 8 chars)"
                 [class.valid]="isPasswordValidSignal()"
-                [class.invalid]="passwordSignal() && !isPasswordValidSignal()">
+                [class.invalid]="passwordSignal() && !isPasswordValidSignal()"
+              />
               @if (passwordSignal()) {
                 <span class="validation-message">
-                  {{ isPasswordValidSignal() ? '✓ Valid' : '✗ Invalid (min 8 characters)' }}
+                  {{
+                    isPasswordValidSignal()
+                      ? '✓ Valid'
+                      : '✗ Invalid (min 8 characters)'
+                  }}
                 </span>
               }
             </div>
             <div class="result-box">
               <strong>Form Status:</strong>
-              <span [class.valid]="isFormValidSignal()" [class.invalid]="!isFormValidSignal()">
-                {{ isFormValidSignal() ? '✓ Valid - Ready to Submit' : '✗ Invalid' }}
+              <span
+                [class.valid]="isFormValidSignal()"
+                [class.invalid]="!isFormValidSignal()"
+              >
+                {{
+                  isFormValidSignal()
+                    ? '✓ Valid - Ready to Submit'
+                    : '✗ Invalid'
+                }}
               </span>
             </div>
           </div>
@@ -418,7 +467,12 @@
       <h2>Documentation</h2>
       <div class="doc-links">
         @for (link of docLinks; track link.url) {
-          <a [href]="link.url" target="_blank" rel="noopener noreferrer" class="doc-link">
+          <a
+            [href]="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="doc-link"
+          >
             {{ link.title }}
           </a>
         }

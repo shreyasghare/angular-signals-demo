@@ -3,5 +3,6 @@ import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 
 // Bootstrap Angular application with provided configuration
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err: unknown) => console.error(err));
+bootstrapApplication(AppComponent, appConfig).catch((err: unknown) =>
+  console.error(err),
+);

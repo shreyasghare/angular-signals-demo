@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-resource-concept',
   imports: [RouterLink],
   templateUrl: './resource-concept.component.html',
-  styleUrl: './resource-concept.component.css'
+  styleUrl: './resource-concept.component.css',
 })
 export class ResourceConceptComponent {
   // Example 1: Using resource() with fetch API
@@ -16,9 +16,9 @@ export class ResourceConceptComponent {
 const userId = signal('123');
 
 const userResource = resource({
-  params: () => ({ id: userId() }),
-  loader: async ({ params }) => {
-    const response = await fetch(\`https://api.example.com/users/\${params.id}\`);
+  request: () => ({ id: userId() }),
+  loader: async ({ request }) => {
+    const response = await fetch(\`https://api.example.com/users/\${request.id}\`);
     return response.json();
   }
 });

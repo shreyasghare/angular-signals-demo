@@ -14,7 +14,7 @@ export interface Post {
   selector: 'app-rxresource-demo',
   imports: [RouterLink],
   templateUrl: './rxresource-demo.component.html',
-  styleUrl: './rxresource-demo.component.css'
+  styleUrl: './rxresource-demo.component.css',
 })
 export class RxresourceDemoComponent {
   searchQuery = signal<string>('');
@@ -26,9 +26,13 @@ export class RxresourceDemoComponent {
   postsResource = rxResource({
     request: () => ({
       searchQuery: this.searchQuery(),
-      limit: this.postLimit()
+      limit: this.postLimit(),
     }),
-    loader: ({ request }: { request: { searchQuery: string; limit: number } }) => {
+    loader: ({
+      request,
+    }: {
+      request: { searchQuery: string; limit: number };
+    }) => {
       const { searchQuery, limit } = request;
       let url = 'https://jsonplaceholder.typicode.com/posts';
       const params: string[] = [];
@@ -48,7 +52,7 @@ export class RxresourceDemoComponent {
       }
 
       return this.http.get<Post[]>(url);
-    }
+    },
   });
 
   // Computed signal to get all posts from resource
@@ -65,11 +69,12 @@ export class RxresourceDemoComponent {
     }
 
     // Filter posts by title, body, id, or userId matching the query
-    const filtered = allPosts.filter((post: Post) =>
-      post.title.toLowerCase().includes(query) ||
-      post.body.toLowerCase().includes(query) ||
-      post.id.toString().includes(query) ||
-      post.userId.toString().includes(query)
+    const filtered = allPosts.filter(
+      (post: Post) =>
+        post.title.toLowerCase().includes(query) ||
+        post.body.toLowerCase().includes(query) ||
+        post.id.toString().includes(query) ||
+        post.userId.toString().includes(query),
     );
 
     return filtered.slice(0, limit);
@@ -88,11 +93,12 @@ export class RxresourceDemoComponent {
     }
 
     const allPosts = this.allPosts();
-    return allPosts.filter((post: Post) =>
-      post.title.toLowerCase().includes(query) ||
-      post.body.toLowerCase().includes(query) ||
-      post.id.toString().includes(query) ||
-      post.userId.toString().includes(query)
+    return allPosts.filter(
+      (post: Post) =>
+        post.title.toLowerCase().includes(query) ||
+        post.body.toLowerCase().includes(query) ||
+        post.id.toString().includes(query) ||
+        post.userId.toString().includes(query),
     ).length;
   });
 
@@ -102,7 +108,9 @@ export class RxresourceDemoComponent {
   // Computed signal for error state
   error = computed((): string | null => {
     const resourceError = this.postsResource.error();
-    return resourceError ? 'Failed to load posts. Please try again later.' : null;
+    return resourceError
+      ? 'Failed to load posts. Please try again later.'
+      : null;
   });
 
   // Update search query from input event

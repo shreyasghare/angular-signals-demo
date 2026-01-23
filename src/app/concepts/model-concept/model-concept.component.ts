@@ -6,7 +6,6 @@ import { RouterLink } from '@angular/router';
   selector: 'app-model-concept',
   imports: [RouterLink],
   templateUrl: './model-concept.component.html',
-  styleUrl: './model-concept.component.css'
+  styleUrl: './model-concept.component.css',
 })
-export class ModelConceptComponent {
-}
+export class ModelConceptComponent {}

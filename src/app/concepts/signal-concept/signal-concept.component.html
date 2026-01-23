@@ -2,13 +2,18 @@
   <header class="concept-header">
     <a routerLink="/" class="back-link">← Back to Home</a>
     <h1>signal()</h1>
-    <p class="concept-description">Basic reactive state primitive for creating writable signals</p>
+    <p class="concept-description">
+      Basic reactive state primitive for creating writable signals
+    </p>
   </header>
 
   <section class="concept-content">
     <div class="concept-section">
       <h2>Overview</h2>
-      <p>The <code>signal()</code> function creates a writable signal that holds a value. Signals are reactive primitives that can be read and updated.</p>
+      <p>
+        The <code>signal()</code> function creates a writable signal that holds
+        a value. Signals are reactive primitives that can be read and updated.
+      </p>
     </div>
 
     <div class="concept-section">
@@ -31,22 +36,39 @@ count.update(value => value + 1);</code></pre>
     <div class="concept-section">
       <h2>Key Features</h2>
       <ul>
-        <li>Writable - can be updated with <code>set()</code> or <code>update()</code></li>
-        <li>Reactive - changes automatically trigger updates in dependent computed signals and effects</li>
-        <li>Type-safe - TypeScript types are inferred from the initial value</li>
+        <li>
+          Writable - can be updated with <code>set()</code> or
+          <code>update()</code>
+        </li>
+        <li>
+          Reactive - changes automatically trigger updates in dependent computed
+          signals and effects
+        </li>
+        <li>
+          Type-safe - TypeScript types are inferred from the initial value
+        </li>
         <li>Readable - call the signal as a function to read its value</li>
       </ul>
     </div>
 
     <div class="concept-section">
       <h2>Example in Demo</h2>
-      <p>In the Signals Demo, basic signals are used for form fields like firstName, lastName, age, and email. These signals are updated as the user types in the input fields.</p>
+      <p>
+        In the Signals Demo, basic signals are used for form fields like
+        firstName, lastName, age, and email. These signals are updated as the
+        user types in the input fields.
+      </p>
       <a routerLink="/signals-demo" class="demo-link">View Live Demo →</a>
     </div>
 
     <div class="concept-section">
       <h2>Documentation</h2>
-      <a href="https://angular.dev/guide/signals" target="_blank" rel="noopener noreferrer" class="doc-link">
+      <a
+        href="https://angular.dev/guide/signals"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="doc-link"
+      >
         Read Official Angular Documentation →
       </a>
     </div>

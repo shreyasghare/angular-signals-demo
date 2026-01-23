@@ -11,7 +11,7 @@ export interface UserSubmittedEvent {
   selector: 'app-user-form',
   imports: [],
   templateUrl: './user-form.component.html',
-  styleUrl: './user-form.component.css'
+  styleUrl: './user-form.component.css',
 })
 export class UserFormComponent {
   // Input signal
@@ -44,7 +44,7 @@ export class UserFormComponent {
     const eventData: UserSubmittedEvent = {
       userName: this.userName(),
       sharedModel: this.sharedModel(),
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
     // Update internal state and emit output signal

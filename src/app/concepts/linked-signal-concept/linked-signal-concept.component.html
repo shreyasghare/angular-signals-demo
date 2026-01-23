@@ -2,13 +2,20 @@
   <header class="concept-header">
     <a routerLink="/" class="back-link">← Back to Home</a>
     <h1>linkedSignal()</h1>
-    <p class="concept-description">Writable signal derived from other signals but can be written to independently</p>
+    <p class="concept-description">
+      Writable signal derived from other signals but can be written to
+      independently
+    </p>
   </header>
 
   <section class="concept-content">
     <div class="concept-section">
       <h2>Overview</h2>
-      <p>The <code>linkedSignal()</code> function creates a writable signal that is derived from other signals but can be written to independently. It maintains reactivity to source changes while allowing manual overrides.</p>
+      <p>
+        The <code>linkedSignal()</code> function creates a writable signal that
+        is derived from other signals but can be written to independently. It
+        maintains reactivity to source changes while allowing manual overrides.
+      </p>
     </div>
 
     <div class="concept-section">
@@ -39,20 +46,32 @@ linkedValue.set('Custom Value');</code></pre>
       <ul>
         <li>Writable - can be updated independently of the source</li>
         <li>Reactive - automatically reacts to source signal changes</li>
-        <li>Computation function - determines how to merge source and manual changes</li>
+        <li>
+          Computation function - determines how to merge source and manual
+          changes
+        </li>
         <li>Useful for editable computed values or validated inputs</li>
       </ul>
     </div>
 
     <div class="concept-section">
       <h2>Example in Demo</h2>
-      <p>In the Signals Demo, linked signals are used for editable full names (can override computed values), validated age (keeps last valid value), and linked display values (can be edited independently).</p>
+      <p>
+        In the Signals Demo, linked signals are used for editable full names
+        (can override computed values), validated age (keeps last valid value),
+        and linked display values (can be edited independently).
+      </p>
       <a routerLink="/signals-demo" class="demo-link">View Live Demo →</a>
     </div>
 
     <div class="concept-section">
       <h2>Documentation</h2>
-      <a href="https://angular.dev/guide/signals#linked-signals" target="_blank" rel="noopener noreferrer" class="doc-link">
+      <a
+        href="https://angular.dev/guide/signals#linked-signals"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="doc-link"
+      >
         Read Official Angular Documentation →
       </a>
     </div>

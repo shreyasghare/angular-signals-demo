@@ -1,5 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, RouterOutlet, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
+import {
+  Router,
+  RouterOutlet,
+  RouterLink,
+  RouterLinkActive,
+  NavigationEnd,
+} from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 
@@ -7,7 +13,7 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, RouterLinkActive, ScrollToTopComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit, OnDestroy {
   title: string = 'angular-signals-demo';
@@ -18,7 +24,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Subscribe to router events and scroll to top on navigation
     this.routerSubscription = this.router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd,
+        ),
+      )
       .subscribe(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });

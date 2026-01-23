@@ -3,12 +3,20 @@
     <h1 class="nav-title">{{ title }}</h1>
     <ul class="nav-links">
       <li>
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
           Home
         </a>
       </li>
       <li>
-        <a routerLink="/signals-demo" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+        <a
+          routerLink="/signals-demo"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
           Signal Demo
         </a>
       </li>

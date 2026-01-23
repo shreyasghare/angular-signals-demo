@@ -6,7 +6,6 @@ import { RouterLink } from '@angular/router';
   selector: 'app-effect-concept',
   imports: [RouterLink],
   templateUrl: './effect-concept.component.html',
-  styleUrl: './effect-concept.component.css'
+  styleUrl: './effect-concept.component.css',
 })
-export class EffectConceptComponent {
-}
+export class EffectConceptComponent {}

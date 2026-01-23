@@ -2,7 +2,10 @@
   <header class="demo-header">
     <a routerLink="/signals-demo" class="back-link">← Back to Signals Demo</a>
     <h1>RxResource using REST API</h1>
-    <p class="intro">Demonstrating API integration with Angular Signals using rxResource - fetching and searching posts from JSONPlaceholder API</p>
+    <p class="intro">
+      Demonstrating API integration with Angular Signals using rxResource -
+      fetching and searching posts from JSONPlaceholder API
+    </p>
   </header>
 
   <section class="post-search-section">
@@ -16,7 +19,9 @@
           class="search-input"
         />
         @if (searchQuery()) {
-          <button type="button" (click)="clearSearch()" class="clear-btn">Clear</button>
+          <button type="button" (click)="clearSearch()" class="clear-btn">
+            Clear
+          </button>
         }
       </div>
 
@@ -37,13 +42,22 @@
       </div>
 
       <div class="post-stats">
-        <span class="stat">Total Posts: <strong>{{ postCount() }}</strong></span>
+        <span class="stat"
+          >Total Posts: <strong>{{ postCount() }}</strong></span
+        >
         @if (searchQuery()) {
-          <span class="stat">Filtered: <strong>{{ filteredPostCount() }}</strong></span>
+          <span class="stat"
+            >Filtered: <strong>{{ filteredPostCount() }}</strong></span
+          >
         } @else {
-          <span class="stat">Showing: <strong>{{ filteredPosts().length }}</strong> of {{ postCount() }}</span>
+          <span class="stat"
+            >Showing: <strong>{{ filteredPosts().length }}</strong> of
+            {{ postCount() }}</span
+          >
         }
-        <span class="stat info-badge">Max {{ postLimit() }} posts displayed</span>
+        <span class="stat info-badge"
+          >Max {{ postLimit() }} posts displayed</span
+        >
       </div>
     </div>
 
@@ -54,7 +68,13 @@
     } @else if (error()) {
       <div class="error-state">
         <p>{{ error() }}</p>
-        <button type="button" (click)="postsResource.reload()" class="retry-btn">Retry</button>
+        <button
+          type="button"
+          (click)="postsResource.reload()"
+          class="retry-btn"
+        >
+          Retry
+        </button>
       </div>
     } @else if (filteredPosts().length === 0) {
       <div class="no-results">
@@ -75,7 +95,11 @@
       </div>
       @if (filteredPostCount() > postLimit()) {
         <div class="limit-notice">
-          <p>Showing first {{ postLimit() }} of {{ filteredPostCount() }} matching posts. Increase the limit or refine your search to see more results.</p>
+          <p>
+            Showing first {{ postLimit() }} of
+            {{ filteredPostCount() }} matching posts. Increase the limit or
+            refine your search to see more results.
+          </p>
         </div>
       }
     }

@@ -6,7 +6,6 @@ import { RouterLink } from '@angular/router';
   selector: 'app-computed-concept',
   imports: [RouterLink],
   templateUrl: './computed-concept.component.html',
-  styleUrl: './computed-concept.component.css'
+  styleUrl: './computed-concept.component.css',
 })
-export class ComputedConceptComponent {
-}
+export class ComputedConceptComponent {}

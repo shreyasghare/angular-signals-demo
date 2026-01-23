@@ -1,7 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BehaviorSubject, combineLatest, debounceTime, distinctUntilChanged, map, Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+} from 'rxjs';
 
 interface UserInfo {
   name: string;
@@ -47,18 +54,20 @@ interface DocLink {
   selector: 'app-rxjs-vs-signals-concept',
   imports: [CommonModule, RouterLink],
   templateUrl: './rxjs-vs-signals-concept.component.html',
-  styleUrl: './rxjs-vs-signals-concept.component.css'
+  styleUrl: './rxjs-vs-signals-concept.component.css',
 })
 export class RxjsVsSignalsConceptComponent {
   // ========== Content Data ==========
   header = {
     title: 'RxJS vs Signals',
-    description: 'Understanding when to use RxJS Observables vs Angular Signals',
+    description:
+      'Understanding when to use RxJS Observables vs Angular Signals',
     videoUrl: 'https://www.youtube.com/watch?v=iA6iyoantuo',
-    videoText: '📺 Reference Video: Angular Signals vs RxJS'
+    videoText: '📺 Reference Video: Angular Signals vs RxJS',
   };
 
-  overview = 'Both <strong>RxJS</strong> and <strong>Angular Signals</strong> are reactive programming paradigms, but they serve different purposes and have distinct characteristics. Understanding their differences helps you choose the right tool for the job.';
+  overview =
+    'Both <strong>RxJS</strong> and <strong>Angular Signals</strong> are reactive programming paradigms, but they serve different purposes and have distinct characteristics. Understanding their differences helps you choose the right tool for the job.';
 
   comparisonItems: ComparisonItem[] = [
     {
@@ -67,14 +76,16 @@ export class RxjsVsSignalsConceptComponent {
         label: 'RxJS:',
         badge: 'Push-based',
         badgeClass: 'badge-push',
-        description: 'Data is pushed through pipelines to subscribers. Producers push values to consumers.'
+        description:
+          'Data is pushed through pipelines to subscribers. Producers push values to consumers.',
       },
       signals: {
         label: 'Signals:',
         badge: 'Pull-based',
         badgeClass: 'badge-pull',
-        description: 'Lazy evaluation - values are pulled when read. Angular automatically tracks dependencies.'
-      }
+        description:
+          'Lazy evaluation - values are pulled when read. Angular automatically tracks dependencies.',
+      },
     },
     {
       title: 'Complexity & Learning Curve',
@@ -82,14 +93,16 @@ export class RxjsVsSignalsConceptComponent {
         label: 'RxJS:',
         badge: 'Complex',
         badgeClass: 'badge-complex',
-        description: 'Steeper learning curve with 100+ operators (map, switchMap, debounceTime, etc.). Requires understanding of streams and subscriptions.'
+        description:
+          'Steeper learning curve with 100+ operators (map, switchMap, debounceTime, etc.). Requires understanding of streams and subscriptions.',
       },
       signals: {
         label: 'Signals:',
         badge: 'Simple',
         badgeClass: 'badge-simple',
-        description: 'Cleaner API with just a few functions: signal(), computed(), effect(). More intuitive for developers.'
-      }
+        description:
+          'Cleaner API with just a few functions: signal(), computed(), effect(). More intuitive for developers.',
+      },
     },
     {
       title: 'Change Detection',
@@ -97,14 +110,16 @@ export class RxjsVsSignalsConceptComponent {
         label: 'RxJS:',
         badge: 'Traditional',
         badgeClass: 'badge-traditional',
-        description: 'Relies on Zone.js or async pipe for change detection. Updates entire component tree.'
+        description:
+          'Relies on Zone.js or async pipe for change detection. Updates entire component tree.',
       },
       signals: {
         label: 'Signals:',
         badge: 'Fine-grained',
         badgeClass: 'badge-fine',
-        description: 'Enables fine-grained reactivity. Updates only specific DOM parts that changed. Enables zoneless apps.'
-      }
+        description:
+          'Enables fine-grained reactivity. Updates only specific DOM parts that changed. Enables zoneless apps.',
+      },
     },
     {
       title: 'Subscription Management',
@@ -112,14 +127,16 @@ export class RxjsVsSignalsConceptComponent {
         label: 'RxJS:',
         badge: 'Manual',
         badgeClass: 'badge-manual',
-        description: 'Requires manual subscription/unsubscription or async pipe. Risk of memory leaks if not handled properly.'
+        description:
+          'Requires manual subscription/unsubscription or async pipe. Risk of memory leaks if not handled properly.',
       },
       signals: {
         label: 'Signals:',
         badge: 'Automatic',
         badgeClass: 'badge-auto',
-        description: 'No manual subscription management. Angular automatically tracks and cleans up dependencies.'
-      }
+        description:
+          'No manual subscription management. Angular automatically tracks and cleans up dependencies.',
+      },
     },
     {
       title: 'Use Cases',
@@ -133,8 +150,8 @@ export class RxjsVsSignalsConceptComponent {
           'WebSockets & real-time streams',
           'Complex event handling',
           'Advanced data orchestration',
-          'Debouncing/throttling'
-        ]
+          'Debouncing/throttling',
+        ],
       },
       signals: {
         label: 'Signals:',
@@ -146,10 +163,10 @@ export class RxjsVsSignalsConceptComponent {
           'Form control values',
           'Derived/computed values',
           'UI toggles & flags',
-          'Synchronous reactivity'
-        ]
-      }
-    }
+          'Synchronous reactivity',
+        ],
+      },
+    },
   ];
 
   codeExamples: CodeExample[] = [
@@ -189,7 +206,7 @@ this.lastName$.next(
 );
 
 // Read values (in template)
-&#123;&#123; fullName$ | async &#125;&#125;`
+&#123;&#123; fullName$ | async &#125;&#125;`,
     },
     {
       title: 'Example 2: Counter with Derived Value',
@@ -213,7 +230,7 @@ increment() &#123;
   this.counter$.next(
     this.counter$.value + 1
   );
-&#125;`
+&#125;`,
     },
     {
       title: 'Example 3: Debounced Search',
@@ -236,7 +253,7 @@ searchQueryDebounced$ = this.searchQuery$.pipe(
 
 updateSearch(value: string) &#123;
   this.searchQuery$.next(value);
-&#125;`
+&#125;`,
     },
     {
       title: 'Example 4: Toggle State',
@@ -259,7 +276,7 @@ toggleTheme() &#123;
 // In template
 &lt;button (click)="toggleTheme()"&gt;
   &#123;&#123; (isDarkMode$ | async) ? 'Light' : 'Dark' &#125;&#125; Mode
-&lt;/button&gt;`
+&lt;/button&gt;`,
     },
     {
       title: 'Example 5: Form Validation',
@@ -295,7 +312,7 @@ isFormValid$ = combineLatest([
   map(([emailValid, passwordValid]) =>
     emailValid && passwordValid
   )
-);`
+);`,
     },
     {
       title: 'Example 6: Filtering a List',
@@ -325,8 +342,8 @@ filteredItems$ = combineLatest([
       )
     )
   )
-);`
-    }
+);`,
+    },
   ];
 
   useCases = {
@@ -339,8 +356,8 @@ filteredItems$ = combineLatest([
         'Working with UI toggles and flags',
         'You want fine-grained change detection',
         'You need simpler, more readable code',
-        'Building zoneless Angular applications'
-      ]
+        'Building zoneless Angular applications',
+      ],
     },
     rxjs: {
       title: '✅ Use RxJS When:',
@@ -351,13 +368,14 @@ filteredItems$ = combineLatest([
         'Combining multiple data sources',
         'Working with Angular Router events',
         'Need advanced operators (switchMap, mergeMap, etc.)',
-        'Integrating with existing Observable-based APIs'
-      ]
-    }
+        'Integrating with existing Observable-based APIs',
+      ],
+    },
   };
 
   interoperability = {
-    description: 'Signals and RxJS can work together! Use <code>@angular/core/rxjs-interop</code> to bridge between them:',
+    description:
+      'Signals and RxJS can work together! Use <code>@angular/core/rxjs-interop</code> to bridge between them:',
     examples: [
       {
         title: 'Convert Signal to Observable',
@@ -370,7 +388,7 @@ const searchQuery$ = toObservable(searchQuery);
 // Use RxJS operators
 const debounced$ = searchQuery$.pipe(
   debounceTime(300)
-);`
+);`,
       },
       {
         title: 'Convert Observable to Signal',
@@ -381,32 +399,32 @@ const data$ = this.http.get('/api/data');
 const dataSignal = toSignal(data$);
 
 // Use in template
-&#123;&#123; dataSignal() &#125;&#125;`
-      }
-    ]
+&#123;&#123; dataSignal() &#125;&#125;`,
+      },
+    ],
   };
 
   summary = {
     paragraphs: [
-      '<strong>Signals</strong> are Angular\'s new reactive primitive designed for simpler, more performant state management. They excel at component-level reactivity and enable fine-grained updates.',
-      '<strong>RxJS</strong> remains essential for complex asynchronous operations, event streams, and advanced data orchestration. It\'s the go-to solution for HTTP, WebSockets, and complex event handling.',
-      '<strong>Best Practice:</strong> Use Signals for component state and UI reactivity. Use RxJS for async operations and complex streams. They complement each other and can be used together via interoperability utilities.'
-    ]
+      "<strong>Signals</strong> are Angular's new reactive primitive designed for simpler, more performant state management. They excel at component-level reactivity and enable fine-grained updates.",
+      "<strong>RxJS</strong> remains essential for complex asynchronous operations, event streams, and advanced data orchestration. It's the go-to solution for HTTP, WebSockets, and complex event handling.",
+      '<strong>Best Practice:</strong> Use Signals for component state and UI reactivity. Use RxJS for async operations and complex streams. They complement each other and can be used together via interoperability utilities.',
+    ],
   };
 
   docLinks: DocLink[] = [
     {
       title: 'Angular Signals Documentation →',
-      url: 'https://angular.dev/guide/signals'
+      url: 'https://angular.dev/guide/signals',
     },
     {
       title: 'RxJS Documentation →',
-      url: 'https://rxjs.dev'
+      url: 'https://rxjs.dev',
     },
     {
       title: 'RxJS Interop Guide →',
-      url: 'https://angular.dev/guide/signals/rxjs-interop'
-    }
+      url: 'https://angular.dev/guide/signals/rxjs-interop',
+    },
   ];
 
   interactiveDemo = {
@@ -416,7 +434,7 @@ const dataSignal = toSignal(data$);
     counterTitle: 'Counter with Derived Value',
     searchTitle: 'Search & Filter List',
     toggleTitle: 'Toggle State Example',
-    validationTitle: 'Form Validation'
+    validationTitle: 'Form Validation',
   };
 
   // ========== Signals Example ==========
@@ -432,7 +450,7 @@ const dataSignal = toSignal(data$);
     return {
       name: this.fullNameSignal(),
       age: this.ageSignal(),
-      isAdult: this.ageSignal() >= 18
+      isAdult: this.ageSignal() >= 18,
     };
   });
 
@@ -447,30 +465,29 @@ const dataSignal = toSignal(data$);
 
   fullName$: Observable<string> = combineLatest([
     this.firstName$,
-    this.lastName$
-  ]).pipe(
-    map(([firstName, lastName]) => `${firstName} ${lastName}`)
-  );
+    this.lastName$,
+  ]).pipe(map(([firstName, lastName]) => `${firstName} ${lastName}`));
 
   userInfo$: Observable<UserInfo> = combineLatest([
     this.fullName$,
-    this.age$
+    this.age$,
   ]).pipe(
-    map(([name, age]): UserInfo => ({
-      name,
-      age,
-      isAdult: age >= 18
-    }))
+    map(
+      ([name, age]): UserInfo => ({
+        name,
+        age,
+        isAdult: age >= 18,
+      }),
+    ),
   );
 
   // ========== Debounced Search Example ==========
   searchQuerySignal = signal<string>('');
 
   private searchQuerySubject = new BehaviorSubject<string>('');
-  searchQueryDebounced$: Observable<string> = this.searchQuerySubject.asObservable().pipe(
-    debounceTime(300),
-    distinctUntilChanged()
-  );
+  searchQueryDebounced$: Observable<string> = this.searchQuerySubject
+    .asObservable()
+    .pipe(debounceTime(300), distinctUntilChanged());
 
   // ========== Counter Example ==========
   counterSignal = signal<number>(0);
@@ -479,7 +496,7 @@ const dataSignal = toSignal(data$);
   private counterSubject = new BehaviorSubject<number>(0);
   counter$: Observable<number> = this.counterSubject.asObservable();
   doubleCounter$: Observable<number> = this.counter$.pipe(
-    map((count: number): number => count * 2)
+    map((count: number): number => count * 2),
   );
 
   // ========== Methods for Signals ==========
@@ -606,14 +623,22 @@ const dataSignal = toSignal(data$);
   // ========== Additional Examples for Interactive Demos ==========
 
   // Search/Filter Example - Signals
-  itemsSignal = signal<string[]>(['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape']);
+  itemsSignal = signal<string[]>([
+    'Apple',
+    'Banana',
+    'Cherry',
+    'Date',
+    'Elderberry',
+    'Fig',
+    'Grape',
+  ]);
   filterTextSignal = signal<string>('');
 
   filteredItemsSignal = computed<string[]>(() => {
     const filter = this.filterTextSignal().toLowerCase();
     if (!filter) return this.itemsSignal();
-    return this.itemsSignal().filter(item =>
-      item.toLowerCase().includes(filter)
+    return this.itemsSignal().filter((item) =>
+      item.toLowerCase().includes(filter),
     );
   });
 
@@ -625,7 +650,15 @@ const dataSignal = toSignal(data$);
   }
 
   // Search/Filter Example - RxJS
-  private itemsSubject = new BehaviorSubject<string[]>(['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape']);
+  private itemsSubject = new BehaviorSubject<string[]>([
+    'Apple',
+    'Banana',
+    'Cherry',
+    'Date',
+    'Elderberry',
+    'Fig',
+    'Grape',
+  ]);
   private filterTextSubject = new BehaviorSubject<string>('');
 
   items$: Observable<string[]> = this.itemsSubject.asObservable();
@@ -633,15 +666,13 @@ const dataSignal = toSignal(data$);
 
   filteredItems$: Observable<string[]> = combineLatest([
     this.items$,
-    this.filterText$
+    this.filterText$,
   ]).pipe(
     map(([items, filterText]) => {
       const filter = filterText.toLowerCase();
       if (!filter) return items;
-      return items.filter(item =>
-        item.toLowerCase().includes(filter)
-      );
-    })
+      return items.filter((item) => item.toLowerCase().includes(filter));
+    }),
   );
 
   get filterTextRxJSValue(): string {
@@ -651,8 +682,8 @@ const dataSignal = toSignal(data$);
   get filteredItemsRxJSValue(): string[] {
     const filter = this.filterTextSubject.value.toLowerCase();
     if (!filter) return this.itemsSubject.value;
-    return this.itemsSubject.value.filter(item =>
-      item.toLowerCase().includes(filter)
+    return this.itemsSubject.value.filter((item) =>
+      item.toLowerCase().includes(filter),
     );
   }
 
@@ -667,7 +698,7 @@ const dataSignal = toSignal(data$);
   isDarkModeSignal = signal<boolean>(false);
 
   toggleDarkModeSignal(): void {
-    this.isDarkModeSignal.update(mode => !mode);
+    this.isDarkModeSignal.update((mode) => !mode);
   }
 
   // Toggle Example - RxJS
@@ -721,19 +752,17 @@ const dataSignal = toSignal(data$);
   password$: Observable<string> = this.passwordSubject.asObservable();
 
   isEmailValid$: Observable<boolean> = this.email$.pipe(
-    map(email => email.includes('@') && email.length > 5)
+    map((email) => email.includes('@') && email.length > 5),
   );
 
   isPasswordValid$: Observable<boolean> = this.password$.pipe(
-    map(password => password.length >= 8)
+    map((password) => password.length >= 8),
   );
 
   isFormValid$: Observable<boolean> = combineLatest([
     this.isEmailValid$,
-    this.isPasswordValid$
-  ]).pipe(
-    map(([emailValid, passwordValid]) => emailValid && passwordValid)
-  );
+    this.isPasswordValid$,
+  ]).pipe(map(([emailValid, passwordValid]) => emailValid && passwordValid));
 
   get emailRxJSValue(): string {
     return this.emailSubject.value;

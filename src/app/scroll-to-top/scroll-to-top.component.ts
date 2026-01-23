@@ -5,7 +5,7 @@ import { Component, HostListener } from '@angular/core';
   selector: 'app-scroll-to-top',
   imports: [CommonModule],
   templateUrl: './scroll-to-top.component.html',
-  styleUrl: './scroll-to-top.component.css'
+  styleUrl: './scroll-to-top.component.css',
 })
 export class ScrollToTopComponent {
   // Show button when user scrolls down more than 300px
@@ -20,7 +20,7 @@ export class ScrollToTopComponent {
   scrollToTop(): void {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 }

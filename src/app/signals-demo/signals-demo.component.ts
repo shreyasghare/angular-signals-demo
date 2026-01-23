@@ -1,5 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, effect, linkedSignal, model, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  linkedSignal,
+  model,
+  signal,
+} from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { UserSubmittedEvent } from '../user-form/user-form.component';
@@ -16,7 +23,7 @@ export interface Post {
   selector: 'app-signals-demo',
   imports: [RouterLink],
   templateUrl: './signals-demo.component.html',
-  styleUrl: './signals-demo.component.css'
+  styleUrl: './signals-demo.component.css',
 })
 export class SignalsDemoComponent {
   // Basic signals
@@ -51,32 +58,34 @@ export class SignalsDemoComponent {
     );
   });
 
-  formSummary = computed((): {
-    firstName: string;
-    lastName: string;
-    fullName: string;
-    age: number;
-    ageCategory: string;
-    email: string;
-    preferences: { notifications: boolean; theme: string };
-    sharedValue: string;
-  } => {
-    return {
-      firstName: this.firstName(),
-      lastName: this.lastName(),
-      fullName: this.fullName(),
-      age: this.age(),
-      ageCategory: this.ageCategory(),
-      email: this.email(),
-      preferences: this.userPreferences(),
-      sharedValue: this.sharedValue()
-    };
-  });
+  formSummary = computed(
+    (): {
+      firstName: string;
+      lastName: string;
+      fullName: string;
+      age: number;
+      ageCategory: string;
+      email: string;
+      preferences: { notifications: boolean; theme: string };
+      sharedValue: string;
+    } => {
+      return {
+        firstName: this.firstName(),
+        lastName: this.lastName(),
+        fullName: this.fullName(),
+        age: this.age(),
+        ageCategory: this.ageCategory(),
+        email: this.email(),
+        preferences: this.userPreferences(),
+        sharedValue: this.sharedValue(),
+      };
+    },
+  );
 
   // Signal with object (using update())
   userPreferences = signal<{ notifications: boolean; theme: string }>({
     notifications: false,
-    theme: 'light'
+    theme: 'light',
   });
 
   // Model signal for two-way binding
@@ -85,31 +94,44 @@ export class SignalsDemoComponent {
   // LinkedSignal: writable signal derived from sharedValue but can be written to independently
   linkedDisplayValue = linkedSignal<string, string>({
     source: this.sharedValue,
-    computation: (sourceValue: string, previous: { value: string } | undefined): string => {
+    computation: (
+      sourceValue: string,
+      previous: { value: string } | undefined,
+    ): string => {
       // Keep previous value if linked signal was written directly, otherwise use source value
-      return previous && previous.value !== sourceValue ? previous.value : sourceValue;
-    }
+      return previous && previous.value !== sourceValue
+        ? previous.value
+        : sourceValue;
+    },
   });
 
   // LinkedSignal example: formatted full name that can be edited independently
   editableFullName = linkedSignal<string, string>({
     source: this.fullName,
-    computation: (sourceValue: string, previous: { value: string } | undefined): string => {
+    computation: (
+      sourceValue: string,
+      previous: { value: string } | undefined,
+    ): string => {
       // Keep edited value if user modified it, otherwise use computed value
-      return previous && previous.value !== sourceValue ? previous.value : sourceValue;
-    }
+      return previous && previous.value !== sourceValue
+        ? previous.value
+        : sourceValue;
+    },
   });
 
   // LinkedSignal for age with validation - keeps valid age, resets if invalid
   validatedAge = linkedSignal<number, number>({
     source: this.age,
-    computation: (sourceValue: number, previous: { value: number } | undefined): number => {
+    computation: (
+      sourceValue: number,
+      previous: { value: number } | undefined,
+    ): number => {
       // Keep previous valid value if source is invalid (0 or negative)
       if (sourceValue <= 0 && previous && previous.value > 0) {
         return previous.value;
       }
       return sourceValue;
-    }
+    },
   });
 
   constructor(private http: HttpClient) {
@@ -173,18 +195,18 @@ export class SignalsDemoComponent {
   }
 
   toggleNotifications(): void {
-    this.userPreferences.update(prefs => ({
+    this.userPreferences.update((prefs) => ({
       ...prefs,
-      notifications: !prefs.notifications
+      notifications: !prefs.notifications,
     }));
   }
 
   updateTheme(event: Event): void {
     const target = event.target as HTMLSelectElement;
     if (target) {
-      this.userPreferences.update(prefs => ({
+      this.userPreferences.update((prefs) => ({
         ...prefs,
-        theme: target.value
+        theme: target.value,
       }));
     }
   }
@@ -196,7 +218,7 @@ export class SignalsDemoComponent {
     this.email.set('');
     this.userPreferences.set({
       notifications: false,
-      theme: 'light'
+      theme: 'light',
     });
     this.sharedValue.set('');
   }
@@ -221,8 +243,10 @@ export class SignalsDemoComponent {
   postsResource = rxResource({
     request: () => ({}),
     loader: () => {
-      return this.http.get<Post[]>('https://jsonplaceholder.typicode.com/posts');
-    }
+      return this.http.get<Post[]>(
+        'https://jsonplaceholder.typicode.com/posts',
+      );
+    },
   });
 
   // Computed signal to get posts from resource
@@ -241,11 +265,12 @@ export class SignalsDemoComponent {
     }
 
     // Filter posts by title, body, id, or userId matching the query
-    const filtered = allPosts.filter((post: Post) =>
-      post.title.toLowerCase().includes(query) ||
-      post.body.toLowerCase().includes(query) ||
-      post.id.toString().includes(query) ||
-      post.userId.toString().includes(query)
+    const filtered = allPosts.filter(
+      (post: Post) =>
+        post.title.toLowerCase().includes(query) ||
+        post.body.toLowerCase().includes(query) ||
+        post.id.toString().includes(query) ||
+        post.userId.toString().includes(query),
     );
 
     return filtered.slice(0, 10);
@@ -253,7 +278,7 @@ export class SignalsDemoComponent {
 
   // Computed signal for total post count
   postCount = computed((): number => this.allPosts().length);
-  
+
   // Computed signal for filtered post count
   filteredPostCount = computed((): number => {
     const query = this.searchQuery().toLowerCase().trim();
@@ -261,11 +286,12 @@ export class SignalsDemoComponent {
       return Math.min(10, this.postCount());
     }
     const allPosts = this.allPosts();
-    return allPosts.filter((post: Post) =>
-      post.title.toLowerCase().includes(query) ||
-      post.body.toLowerCase().includes(query) ||
-      post.id.toString().includes(query) ||
-      post.userId.toString().includes(query)
+    return allPosts.filter(
+      (post: Post) =>
+        post.title.toLowerCase().includes(query) ||
+        post.body.toLowerCase().includes(query) ||
+        post.id.toString().includes(query) ||
+        post.userId.toString().includes(query),
     ).length;
   });
 
@@ -273,7 +299,9 @@ export class SignalsDemoComponent {
   isLoading = computed((): boolean => this.postsResource.isLoading());
   error = computed((): string | null => {
     const resourceError = this.postsResource.error();
-    return resourceError ? 'Failed to load posts. Please try again later.' : null;
+    return resourceError
+      ? 'Failed to load posts. Please try again later.'
+      : null;
   });
 
   // Update search query from input event

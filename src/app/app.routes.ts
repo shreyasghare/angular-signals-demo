@@ -18,58 +18,58 @@ import { RxresourceDemoComponent } from './rxresource-demo/rxresource-demo.compo
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
   },
   {
     path: 'signals-demo',
-    component: SignalsDemoComponent
+    component: SignalsDemoComponent,
   },
   {
     path: 'user-registration-demo',
-    component: UserRegistrationDemoComponent
+    component: UserRegistrationDemoComponent,
   },
   {
     path: 'rxresource-demo',
-    component: RxresourceDemoComponent
+    component: RxresourceDemoComponent,
   },
   {
     path: 'concepts/signal',
-    component: SignalConceptComponent
+    component: SignalConceptComponent,
   },
   {
     path: 'concepts/computed',
-    component: ComputedConceptComponent
+    component: ComputedConceptComponent,
   },
   {
     path: 'concepts/effect',
-    component: EffectConceptComponent
+    component: EffectConceptComponent,
   },
   {
     path: 'concepts/model',
-    component: ModelConceptComponent
+    component: ModelConceptComponent,
   },
   {
     path: 'concepts/input',
-    component: InputConceptComponent
+    component: InputConceptComponent,
   },
   {
     path: 'concepts/output',
-    component: OutputConceptComponent
+    component: OutputConceptComponent,
   },
   {
     path: 'concepts/linked-signal',
-    component: LinkedSignalConceptComponent
+    component: LinkedSignalConceptComponent,
   },
   {
     path: 'concepts/resource',
-    component: ResourceConceptComponent
+    component: ResourceConceptComponent,
   },
   {
     path: 'concepts/rxjs-vs-signals',
-    component: RxjsVsSignalsConceptComponent
+    component: RxjsVsSignalsConceptComponent,
   },
   {
     path: 'concepts/zonejs-vs-signals',
-    component: ZonejsVsSignalsConceptComponent
-  }
+    component: ZonejsVsSignalsConceptComponent,
+  },
 ];

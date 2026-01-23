@@ -8,7 +8,11 @@
   <section class="concept-content">
     <div class="concept-section">
       <h2>Overview</h2>
-      <p>The <code>effect()</code> function creates a side effect that runs when its signal dependencies change. Effects automatically track which signals they read.</p>
+      <p>
+        The <code>effect()</code> function creates a side effect that runs when
+        its signal dependencies change. Effects automatically track which
+        signals they read.
+      </p>
     </div>
 
     <div class="concept-section">
@@ -29,22 +33,37 @@ count.set(5); // Effect runs and logs: "Count changed: 5"</code></pre>
     <div class="concept-section">
       <h2>Key Features</h2>
       <ul>
-        <li>Automatic dependency tracking - tracks signals read inside the effect</li>
-        <li>Runs synchronously - executes immediately when dependencies change</li>
-        <li>Can be used for side effects like logging, DOM updates, or API calls</li>
+        <li>
+          Automatic dependency tracking - tracks signals read inside the effect
+        </li>
+        <li>
+          Runs synchronously - executes immediately when dependencies change
+        </li>
+        <li>
+          Can be used for side effects like logging, DOM updates, or API calls
+        </li>
         <li>Returns a cleanup function - can be used to clean up resources</li>
       </ul>
     </div>
 
     <div class="concept-section">
       <h2>Example in Demo</h2>
-      <p>In the Signals Demo, effects are used to log form changes to the console and update the document title when the full name changes. Open the browser console to see effects in action.</p>
+      <p>
+        In the Signals Demo, effects are used to log form changes to the console
+        and update the document title when the full name changes. Open the
+        browser console to see effects in action.
+      </p>
       <a routerLink="/signals-demo" class="demo-link">View Live Demo →</a>
     </div>
 
     <div class="concept-section">
       <h2>Documentation</h2>
-      <a href="https://angular.dev/guide/signals#effects" target="_blank" rel="noopener noreferrer" class="doc-link">
+      <a
+        href="https://angular.dev/guide/signals#effects"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="doc-link"
+      >
         Read Official Angular Documentation →
       </a>
     </div>

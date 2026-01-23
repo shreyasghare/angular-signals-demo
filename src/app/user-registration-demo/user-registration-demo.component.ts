@@ -1,13 +1,22 @@
 import { JsonPipe } from '@angular/common';
-import { Component, computed, model, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  computed,
+  model,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { UserFormComponent, UserSubmittedEvent } from '../user-form/user-form.component';
+import {
+  UserFormComponent,
+  UserSubmittedEvent,
+} from '../user-form/user-form.component';
 
 @Component({
   selector: 'app-user-registration-demo',
   imports: [JsonPipe, UserFormComponent, RouterLink],
   templateUrl: './user-registration-demo.component.html',
-  styleUrl: './user-registration-demo.component.css'
+  styleUrl: './user-registration-demo.component.css',
 })
 export class UserRegistrationDemoComponent {
   // Basic signals
@@ -42,41 +51,50 @@ export class UserRegistrationDemoComponent {
     );
   });
 
-  formSummary = computed((): {
-    firstName: string;
-    lastName: string;
-    fullName: string;
-    age: number;
-    ageCategory: string;
-    email: string;
-    sharedValue: string;
-  } => {
-    return {
-      firstName: this.firstName(),
-      lastName: this.lastName(),
-      fullName: this.fullName(),
-      age: this.age(),
-      ageCategory: this.ageCategory(),
-      email: this.email(),
-      sharedValue: this.sharedValue()
-    };
-  });
+  formSummary = computed(
+    (): {
+      firstName: string;
+      lastName: string;
+      fullName: string;
+      age: number;
+      ageCategory: string;
+      email: string;
+      sharedValue: string;
+    } => {
+      return {
+        firstName: this.firstName(),
+        lastName: this.lastName(),
+        fullName: this.fullName(),
+        age: this.age(),
+        ageCategory: this.ageCategory(),
+        email: this.email(),
+        sharedValue: this.sharedValue(),
+      };
+    },
+  );
 
   // Model signal for two-way binding
   sharedValue = model<string>('');
 
   // Source selection for computed transformation
-  computedSource = signal<'firstName' | 'lastName' | 'email' | 'sharedValue'>('firstName');
+  computedSource = signal<'firstName' | 'lastName' | 'email' | 'sharedValue'>(
+    'firstName',
+  );
 
   // Get the selected source value based on computedSource signal
   selectedSourceValue = computed((): string => {
     const source = this.computedSource();
     switch (source) {
-      case 'firstName': return this.firstName();
-      case 'lastName': return this.lastName();
-      case 'email': return this.email();
-      case 'sharedValue': return this.sharedValue();
-      default: return '';
+      case 'firstName':
+        return this.firstName();
+      case 'lastName':
+        return this.lastName();
+      case 'email':
+        return this.email();
+      case 'sharedValue':
+        return this.sharedValue();
+      default:
+        return '';
     }
   });
 
@@ -126,7 +144,9 @@ export class UserRegistrationDemoComponent {
   changeComputedSource(event: Event): void {
     const target = event.target as HTMLSelectElement;
     if (target) {
-      this.computedSource.set(target.value as 'firstName' | 'lastName' | 'email' | 'sharedValue');
+      this.computedSource.set(
+        target.value as 'firstName' | 'lastName' | 'email' | 'sharedValue',
+      );
     }
   }
 

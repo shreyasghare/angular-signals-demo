@@ -6,7 +6,6 @@ import { RouterLink } from '@angular/router';
   selector: 'app-input-concept',
   imports: [RouterLink],
   templateUrl: './input-concept.component.html',
-  styleUrl: './input-concept.component.css'
+  styleUrl: './input-concept.component.css',
 })
-export class InputConceptComponent {
-}
+export class InputConceptComponent {}

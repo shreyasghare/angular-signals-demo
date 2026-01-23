@@ -2,13 +2,19 @@
   <header class="concept-header">
     <a routerLink="/" class="back-link">← Back to Home</a>
     <h1>model()</h1>
-    <p class="concept-description">Two-way binding signal for parent-child component communication</p>
+    <p class="concept-description">
+      Two-way binding signal for parent-child component communication
+    </p>
   </header>
 
   <section class="concept-content">
     <div class="concept-section">
       <h2>Overview</h2>
-      <p>The <code>model()</code> function creates a writable signal that can be used for two-way binding between parent and child components. It combines the functionality of input and output signals.</p>
+      <p>
+        The <code>model()</code> function creates a writable signal that can be
+        used for two-way binding between parent and child components. It
+        combines the functionality of input and output signals.
+      </p>
     </div>
 
     <div class="concept-section">
@@ -37,13 +43,22 @@ sharedModel = model.required&lt;string&gt;();</code></pre>
 
     <div class="concept-section">
       <h2>Example in Demo</h2>
-      <p>In the Signals Demo, a model signal is used for sharedValue, which is bound to the child component. Changes in either the parent or child automatically sync.</p>
+      <p>
+        In the Signals Demo, a model signal is used for sharedValue, which is
+        bound to the child component. Changes in either the parent or child
+        automatically sync.
+      </p>
       <a routerLink="/signals-demo" class="demo-link">View Live Demo →</a>
     </div>
 
     <div class="concept-section">
       <h2>Documentation</h2>
-      <a href="https://angular.dev/guide/signals#model-signals" target="_blank" rel="noopener noreferrer" class="doc-link">
+      <a
+        href="https://angular.dev/guide/signals#model-signals"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="doc-link"
+      >
         Read Official Angular Documentation →
       </a>
     </div>
